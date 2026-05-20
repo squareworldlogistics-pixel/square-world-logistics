@@ -28,6 +28,8 @@ export default function ContactForm() {
   const [form, setForm] = useState<FormState>(INITIAL_STATE);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -54,14 +56,35 @@ export default function ContactForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
-    /* In production, this would POST to an API endpoint */
-    console.info("[ContactForm] Submission:", form);
-    setSubmitted(true);
-    setForm(INITIAL_STATE);
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to send message. Please try again.");
+      }
+
+      setSubmitted(true);
+      setForm(INITIAL_STATE);
+    } catch (err: any) {
+      setSubmitError(err?.message || "Failed to send message. Please try again later.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const updateField = (field: keyof FormState, value: string) => {
@@ -210,22 +233,44 @@ export default function ContactForm() {
         {errors.message && <FieldError message={errors.message} />}
       </div>
 
+      {submitError && (
+        <div
+          style={{
+            padding: "1rem",
+            backgroundColor: "rgba(239, 68, 68, 0.08)",
+            border: "1px solid rgba(239, 68, 68, 0.2)",
+            borderRadius: "8px",
+            color: "var(--color-swl-crimson)",
+            fontSize: "0.875rem",
+            lineHeight: 1.5,
+          }}
+        >
+          {submitError}
+        </div>
+      )}
+
       <div className="mt-2">
-        <MagneticButton type="submit" className="swl-btn--primary w-full md:w-auto justify-center">
-          Send Message
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <line x1="5" y1="12" x2="19" y2="12" />
-            <polyline points="12 5 19 12 12 19" />
-          </svg>
+        <MagneticButton
+          type="submit"
+          className="swl-btn--primary w-full md:w-auto justify-center"
+          disabled={submitting}
+        >
+          {submitting ? "Sending..." : "Send Message"}
+          {!submitting && (
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          )}
         </MagneticButton>
       </div>
     </form>

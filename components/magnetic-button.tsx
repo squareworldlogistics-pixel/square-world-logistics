@@ -9,6 +9,7 @@ type MagneticButtonProps = {
   href?: string;
   onClick?: () => void;
   type?: "button" | "submit";
+  disabled?: boolean;
 };
 
 /**
@@ -21,13 +22,14 @@ export default function MagneticButton({
   href,
   onClick,
   type = "button",
+  disabled,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLElement>(null);
 
   const commonProps = {
     ref: ref as React.RefObject<HTMLElement>,
     className: `swl-btn ${className}`,
-    style: { transition: "all 0.3s ease" },
+    style: { transition: "all 0.3s ease", opacity: disabled ? 0.6 : 1, cursor: disabled ? "not-allowed" : "pointer" },
   };
 
   if (href) {
@@ -48,6 +50,7 @@ export default function MagneticButton({
       ref={ref as React.RefObject<HTMLButtonElement>}
       type={type}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>
