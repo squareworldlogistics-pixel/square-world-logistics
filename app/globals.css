@@ -1,0 +1,337 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+ * DESIGN SYSTEM — Square World Logistics
+ * Force light mode, override Tailwind defaults
+ * ───────────────────────────────────────────── */
+
+@theme inline {
+  --color-swl-blue: #3B6EB5;
+  --color-swl-blue-light: #4A7FC6;
+  --color-swl-blue-dark: #2D5A96;
+  --color-swl-crimson: #8B1A2B;
+  --color-swl-crimson-light: #A62238;
+  --color-swl-charcoal: #1A1A1A;
+  --color-swl-slate: #4A4A4A;
+  --color-swl-mist: #F5F5F3;
+  --color-swl-white: #FFFFFF;
+  --color-swl-rule: #E0E0E0;
+  --color-swl-green: #2D6A4F;
+  --color-swl-green-light: #40916C;
+
+  --font-display: var(--font-dm-serif);
+  --font-body: var(--font-inter);
+}
+
+/* ── Force Light Mode ────────────────────────── */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: light only !important;
+}
+
+body {
+  font-family: var(--font-body), system-ui, sans-serif !important;
+  color: var(--color-swl-charcoal) !important;
+  background-color: var(--color-swl-white) !important;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-swl-blue);
+  color: var(--color-swl-white);
+}
+
+/* ── Typography ──────────────────────────────── */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), Georgia, 'Times New Roman', serif !important;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  color: var(--color-swl-charcoal) !important;
+}
+
+p {
+  color: var(--color-swl-slate) !important;
+  line-height: 1.75;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── Layout ──────────────────────────────────── */
+
+.swl-container {
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .swl-container {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+.swl-section {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .swl-section {
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+}
+
+.swl-section--tight {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .swl-section--tight {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
+
+/* ── Animations ──────────────────────────────── */
+
+@keyframes swl-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes swl-marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-33.333333%);
+  }
+}
+
+.hover-pause:hover {
+  animation-play-state: paused !important;
+}
+
+@keyframes swl-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes swl-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+/* ── Rule Lines ──────────────────────────────── */
+
+.swl-rule {
+  width: 100%;
+  height: 1px;
+  background: var(--color-swl-rule);
+  border: none;
+}
+
+.swl-accent-line {
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: var(--color-swl-blue);
+  border-radius: 2px;
+}
+
+.swl-accent-line--crimson {
+  background: var(--color-swl-crimson);
+}
+
+/* ── Buttons ─────────────────────────────────── */
+
+.swl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body), system-ui, sans-serif !important;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1rem 2.25rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  border-radius: 0 !important;
+}
+
+.swl-btn--primary {
+  background-color: var(--color-swl-blue);
+  color: var(--color-swl-white) !important;
+}
+
+.swl-btn--primary:hover {
+  background: var(--color-swl-blue-dark);
+}
+
+.swl-btn--outline {
+  background: transparent;
+  color: var(--color-swl-charcoal) !important;
+  border: 1.5px solid var(--color-swl-charcoal);
+}
+
+.swl-btn--outline:hover {
+  background: var(--color-swl-white);
+  color: var(--color-swl-charcoal);
+}
+
+.swl-btn--white {
+  background-color: var(--color-swl-white);
+  color: var(--color-swl-blue) !important;
+}
+
+.swl-btn--white:hover {
+  background: var(--color-swl-white);
+}
+
+/* ── Form Elements ───────────────────────────── */
+
+.swl-input {
+  width: 100%;
+  padding: 0.875rem 0;
+  font-family: var(--font-body), system-ui, sans-serif !important;
+  font-size: 0.9375rem;
+  color: var(--color-swl-charcoal) !important;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--color-swl-rule);
+  border-radius: 0;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.swl-input:focus {
+  border-bottom-color: var(--color-swl-blue);
+}
+
+.swl-input::placeholder {
+  color: #B0B0B0 !important;
+  font-weight: 300;
+}
+
+.swl-label {
+  display: block;
+  font-family: var(--font-display), system-ui, sans-serif !important;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-swl-slate) !important;
+  margin-bottom: 0.375rem;
+}
+
+.swl-textarea {
+  resize: vertical;
+  min-height: 120px;
+  border-bottom: 1.5px solid var(--color-swl-rule);
+}
+
+.swl-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234A4A4A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0 center;
+}
+
+/* ── Responsive ──────────────────────────────── */
+
+@media (max-width: 768px) {
+  .swl-container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .swl-section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
+
+/* ── Lenis Smooth Scrolling ──────────────────── */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+@theme inline {
+  --animate-cell-ripple: cell-ripple var(--duration, 200ms) ease-out none 1 var(--delay, 0ms);
+
+  @keyframes cell-ripple {
+    0% {
+      opacity: 0.4;
+    }
+
+    50% {
+      opacity: 0.8;
+    }
+
+    100% {
+      opacity: 0.4;
+    }
+  }
+}

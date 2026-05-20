@@ -1,0 +1,270 @@
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { COMPANY, NAV_LINKS } from "@/lib/site-data";
+
+/**
+ * Premium dark footer with 4-column layout, social links, and rich contact info.
+ */
+export default function Footer() {
+  const year = new Date().getFullYear();
+
+  return (
+    <footer
+      style={{
+        backgroundColor: "var(--color-swl-charcoal)",
+        color: "var(--color-swl-white)",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      <div className="swl-container" style={{ paddingTop: "6rem", paddingBottom: "3rem" }}>
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16"
+        >
+          {/* Column 1: Brand & Socials */}
+          <div style={{ paddingRight: "2rem" }}>
+            <div
+              style={{
+                display: "inline-block",
+                backgroundColor: "#FFFFFF",
+                padding: "0.5rem 1rem",
+                borderRadius: "8px",
+                marginBottom: "1.5rem",
+              }}
+            >
+              <Image
+                src="/logo.png"
+                alt={`${COMPANY.name} Logo`}
+                width={240}
+                height={66}
+                style={{
+                  height: "48px",
+                  width: "auto",
+                  display: "block",
+                }}
+              />
+            </div>
+            <p
+              style={{
+                fontSize: "0.875rem",
+                lineHeight: "1.75",
+                color: "rgba(255, 255, 255, 0.6)",
+                marginBottom: "2rem",
+              }}
+            >
+              Reliable global shipping and freight solutions across 220+ countries. End-to-end logistics support for businesses of all sizes, so you can focus on growth.
+            </p>
+            <div style={{ display: "flex", gap: "1rem" }}>
+              {/* Social Icons */}
+              {["linkedin", "twitter", "facebook"].map((social) => (
+                <a
+                  key={social}
+                  href="#"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "50%",
+                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                    color: "var(--color-swl-white)",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = "var(--color-swl-blue)";
+                    e.currentTarget.style.transform = "translateY(-2px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.05)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                  aria-label={social}
+                >
+                  {/* Tiny inline SVG for social icon shapes */}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {social === "linkedin" && <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z M2 9h4v12H2z M4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" />}
+                    {social === "twitter" && <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />}
+                    {social === "facebook" && <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />}
+                  </svg>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Column 2: Quick Links */}
+          <div>
+            <h4
+              style={{
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                color: "var(--color-swl-white)",
+                marginBottom: "1.5rem",
+              }}
+            >
+              Company
+            </h4>
+            <nav style={{ display: "flex", flexDirection: "column", gap: "1rem" }} aria-label="Footer navigation">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  style={{
+                    fontSize: "0.875rem",
+                    color: "rgba(255, 255, 255, 0.6)",
+                    transition: "color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-blue)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.6)")}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Column 3: Services */}
+          <div>
+            <h4
+              style={{
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                color: "var(--color-swl-white)",
+                marginBottom: "1.5rem",
+              }}
+            >
+              Services
+            </h4>
+            <nav style={{ display: "flex", flexDirection: "column", gap: "1rem" }} aria-label="Footer services">
+              {["Air Express", "Air Freight", "Sea Freight", "Customs Clearance"].map((item) => (
+                <Link
+                  key={item}
+                  href="/services"
+                  style={{
+                    fontSize: "0.875rem",
+                    color: "rgba(255, 255, 255, 0.6)",
+                    transition: "color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-blue)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.6)")}
+                >
+                  {item}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Column 4: Contact Info */}
+          <div>
+            <h4
+              style={{
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                color: "var(--color-swl-white)",
+                marginBottom: "1.5rem",
+              }}
+            >
+              Contact Us
+            </h4>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", color: "rgba(255, 255, 255, 0.6)" }}>
+              {/* Address */}
+              <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-swl-blue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: "2px" }}>
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span style={{ fontSize: "0.875rem", lineHeight: "1.5" }}>{COMPANY.address}</span>
+              </div>
+              
+              {/* Office Hours */}
+              {COMPANY.officeHours && (
+                <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-swl-blue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: "2px" }}>
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  <span style={{ fontSize: "0.875rem", lineHeight: "1.5" }}>{COMPANY.officeHours}</span>
+                </div>
+              )}
+              
+              {/* Phones */}
+              <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-swl-blue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: "2px" }}>
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", fontSize: "0.875rem" }}>
+                  <a href={`tel:${COMPANY.phone.replace(/\s/g, "")}`} style={{ transition: "color 0.2s ease" }} onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-white)")} onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.6)")}>
+                    {COMPANY.phone}
+                  </a>
+                  {COMPANY.phone2 && (
+                    <a href={`tel:${COMPANY.phone2.replace(/\s/g, "")}`} style={{ transition: "color 0.2s ease" }} onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-white)")} onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.6)")}>
+                      {COMPANY.phone2}
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {/* Email */}
+              <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-swl-blue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: "2px" }}>
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                <a href={`mailto:${COMPANY.email}`} style={{ fontSize: "0.875rem", transition: "color 0.2s ease" }} onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-white)")} onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.6)")}>
+                  {COMPANY.email}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div
+          style={{
+            marginTop: "5rem",
+            paddingTop: "2rem",
+            borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1rem",
+            fontSize: "0.8125rem",
+            color: "rgba(255, 255, 255, 0.4)",
+          }}
+        >
+          <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
+            <span>&copy; {year} {COMPANY.name}. All rights reserved.</span>
+            <span style={{ opacity: 0.3 }}>|</span>
+            <span style={{ fontSize: "0.8125rem", color: "rgba(255, 255, 255, 0.45)" }}>
+              Built by <a href="https://www.davlabs.in" target="_blank" rel="noopener noreferrer" style={{ 
+                color: "var(--color-swl-white)", 
+                textDecoration: "none", 
+                fontFamily: "var(--font-display)",
+                fontSize: "0.9375rem",
+                marginLeft: "0.25rem",
+                transition: "all 0.2s ease",
+                borderBottom: "1px solid transparent"
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.borderBottomColor = "var(--color-swl-blue)")}
+              onMouseLeave={(e) => (e.currentTarget.style.borderBottomColor = "transparent")}
+              >DAVLabs</a>
+            </span>
+          </div>
+          <div style={{ display: "flex", gap: "2rem" }}>
+            <Link href="/privacy" style={{ transition: "color 0.2s ease" }} onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.8)")} onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.4)")}>Privacy Policy</Link>
+            <Link href="/terms" style={{ transition: "color 0.2s ease" }} onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.8)")} onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.4)")}>Terms of Service</Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
