@@ -251,24 +251,15 @@ function NavLink({
       onMouseLeave={() => setHovered(false)}
     >
       {label}
-      {/* Faint Route track line */}
+      {/* Solid Route track line */}
       <span
-        className="absolute left-0 -bottom-1 h-[3px] w-full"
+        className="absolute left-0 -bottom-1 h-[2px] w-full"
         style={{
-          background: "linear-gradient(to right, rgba(3, 105, 161, 0.08) 0%, rgba(3, 105, 161, 0.25) 100%)",
+          backgroundColor: "var(--color-swl-blue)",
           opacity: isActive || hovered ? 1 : 0,
           transition: "opacity 0.3s ease",
         }}
       />
-      {/* Solid path when link is active */}
-      {isActive && !hovered && (
-        <span
-          className="absolute left-0 -bottom-1 h-[3px] w-full"
-          style={{
-            backgroundColor: "rgba(3, 105, 161, 0.25)",
-          }}
-        />
-      )}
       {/* Transit Plane — bottom = line_center - half_plane = (-4 + 1.5) - 9 = -11.5px */}
       <span
         className="absolute"
