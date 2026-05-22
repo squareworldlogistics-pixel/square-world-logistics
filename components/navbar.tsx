@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { COMPANY, NAV_LINKS } from "@/lib/site-data";
 
@@ -44,18 +43,16 @@ export default function Navbar() {
       >
         <div
           className="swl-container flex items-center justify-between"
-          style={{ height: "88px" }}
+          style={{ height: "80px" }}
         >
           {/* Logo */}
           <Link href="/" className="flex items-center relative z-50">
-            <Image
-              src="/logo.png"
+            <img
+              src="/logo.png?v=3"
               alt={`${COMPANY.name} Logo`}
-              width={260}
-              height={72}
-              className="w-auto"
-              style={{ height: "64px", objectFit: "contain" }}
-              priority
+              width="140"
+              height="56"
+              style={{ height: "56px", width: "auto", display: "block" }}
             />
           </Link>
 
@@ -119,17 +116,19 @@ export default function Navbar() {
                   </svg>
                   {COMPANY.phone}
                 </a>
-                <a
-                  href={`tel:${COMPANY.phone2?.replace(/\s/g, "")}`}
-                  style={{ display: "flex", alignItems: "center", gap: "0.375rem", transition: "color 0.2s ease" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-blue)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-swl-charcoal)")}
-                >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-swl-blue)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                  </svg>
-                  {COMPANY.phone2}
-                </a>
+                {COMPANY.phone2 && (
+                  <a
+                    href={`tel:${COMPANY.phone2.replace(/\s/g, "")}`}
+                    style={{ display: "flex", alignItems: "center", gap: "0.375rem", transition: "color 0.2s ease" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-blue)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-swl-charcoal)")}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-swl-blue)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                    {COMPANY.phone2}
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -137,7 +136,7 @@ export default function Navbar() {
           {/* Mobile Hamburger */}
           <button
             id="mobile-menu-toggle"
-            className="md:hidden relative z-50 flex flex-col justify-center items-center w-10 h-10 gap-1.5"
+            className="lg:hidden relative z-50 flex flex-col justify-center items-center w-10 h-10 gap-1.5"
             onClick={() => setIsMobileOpen(!isMobileOpen)}
             aria-label={isMobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileOpen}
@@ -182,7 +181,7 @@ export default function Navbar() {
 
       {/* Mobile Overlay */}
       <div
-        className="fixed inset-0 z-40 flex flex-col items-center justify-center md:hidden"
+        className="fixed inset-0 z-40 flex flex-col items-center justify-center lg:hidden"
         style={{
           backgroundColor: "var(--color-swl-charcoal)",
           opacity: isMobileOpen ? 1 : 0,
@@ -220,7 +219,7 @@ export default function Navbar() {
   );
 }
 
-/* ── NavLink with hover underline ────────────── */
+/* ── NavLink with hover underline and transit plane ────────────── */
 
 function NavLink({
   href,
@@ -246,6 +245,7 @@ function NavLink({
         fontWeight: 600,
         letterSpacing: "0.1em",
         textTransform: "uppercase" as const,
+        transition: "color 0.25s ease",
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -253,7 +253,7 @@ function NavLink({
       {label}
       {/* Faint Route track line */}
       <span
-        className="absolute left-0 -bottom-1 h-[1px] w-full"
+        className="absolute left-0 -bottom-1 h-[3px] w-full"
         style={{
           background: "linear-gradient(to right, rgba(3, 105, 161, 0.08) 0%, rgba(3, 105, 161, 0.25) 100%)",
           opacity: isActive || hovered ? 1 : 0,
@@ -263,28 +263,30 @@ function NavLink({
       {/* Solid path when link is active */}
       {isActive && !hovered && (
         <span
-          className="absolute left-0 -bottom-1 h-[1px] w-full"
+          className="absolute left-0 -bottom-1 h-[3px] w-full"
           style={{
             backgroundColor: "rgba(3, 105, 161, 0.25)",
           }}
         />
       )}
-      {/* Transit Plane (Representing the shipment flying along the route) */}
+      {/* Transit Plane — bottom = line_center - half_plane = (-4 + 1.5) - 9 = -11.5px */}
       <span
         className="absolute"
         style={{
-          bottom: "-10px", // Mathematically aligns the center of the 12px plane exactly on the -4px (-bottom-1) route track
+          bottom: "-11.5px",
           opacity: isActive || hovered ? 1 : 0,
-          left: hovered ? "calc(100% - 12px)" : isActive ? "calc(100% - 12px)" : "0px",
+          left: hovered ? "calc(100% - 18px)" : isActive ? "calc(100% - 18px)" : "0px",
           transition: "left 0.55s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease",
-          display: "inline-flex",
+          display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          width: "18px",
+          height: "18px",
         }}
       >
         <svg 
-          width="12" 
-          height="12" 
+          width="18" 
+          height="18" 
           viewBox="0 0 24 24" 
           fill="var(--color-swl-blue)"
           style={{ transform: "rotate(90deg)" }}

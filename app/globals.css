@@ -55,11 +55,11 @@ h4 {
   font-weight: 400;
   line-height: 1.15;
   letter-spacing: -0.005em;
-  color: var(--color-swl-charcoal) !important;
+  color: var(--color-swl-charcoal);
 }
 
 p {
-  color: var(--color-swl-slate) !important;
+  color: var(--color-swl-slate);
   line-height: 1.75;
 }
 

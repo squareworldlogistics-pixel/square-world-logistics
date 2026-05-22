@@ -50,11 +50,52 @@ export default function ContactSection({
                   value={COMPANY.email}
                   href={`mailto:${COMPANY.email}`}
                 />
-                <ContactInfoBlock
-                  label="Phone"
-                  value={COMPANY.phone}
-                  href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
-                />
+                <div>
+                  <div
+                    style={{
+                      fontSize: "0.6875rem",
+                      fontWeight: 600,
+                      letterSpacing: "0.12em",
+                      textTransform: "uppercase",
+                      marginBottom: "0.375rem",
+                      color: "var(--color-swl-slate)",
+                    }}
+                  >
+                    Phone
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+                    <a
+                      href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
+                      style={{
+                        fontSize: "1rem",
+                        fontWeight: 500,
+                        color: "var(--color-swl-charcoal)",
+                        transition: "opacity 0.2s ease",
+                        width: "fit-content",
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.75")}
+                      onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+                    >
+                      {COMPANY.phone}
+                    </a>
+                    {COMPANY.phone2 && (
+                      <a
+                        href={`tel:${COMPANY.phone2.replace(/\s/g, "")}`}
+                        style={{
+                          fontSize: "1rem",
+                          fontWeight: 500,
+                          color: "var(--color-swl-charcoal)",
+                          transition: "opacity 0.2s ease",
+                          width: "fit-content",
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.75")}
+                        onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+                      >
+                        {COMPANY.phone2}
+                      </a>
+                    )}
+                  </div>
+                </div>
                 <ContactInfoBlock
                   label="Office"
                   value={COMPANY.address}

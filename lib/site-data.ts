@@ -279,6 +279,8 @@ export const INCOTERMS = [
 export const CARRIERS = [
   { name: "FedEx", trackingUrl: "https://www.fedex.com/fedextrack/?tracknumbers=" },
   { name: "UPS", trackingUrl: "https://www.ups.com/track?tracknum=" },
+  { name: "DHL", trackingUrl: "https://www.dhl.com/global-en/home/tracking.html?tracking-id=" },
+  { name: "Aramex", trackingUrl: "https://www.aramex.com/track/results?shipmentNumber=" },
 ] as const;
 
 export const SUSTAINABILITY = {

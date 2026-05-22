@@ -11,11 +11,13 @@ interface MapProps {
     end: { lat: number; lng: number; label?: string };
   }>;
   lineColor?: string;
+  dotColor?: string;
 }
 
 export function WorldMap({
   dots = [],
-  lineColor = "var(--color-swl-blue)",
+  lineColor = "#0ea5e9", // Lighter blue for dark background
+  dotColor = "rgba(255, 255, 255, 0.25)", // Subtle white dots for dark background
 }: MapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   
@@ -24,7 +26,7 @@ export function WorldMap({
 
   const svgMap = map.getSVG({
     radius: 0.22,
-    color: "rgba(26, 26, 26, 0.15)", // Subtle gray dots for light mode
+    color: dotColor,
     shape: "circle",
     backgroundColor: "transparent",
   });

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import MagneticButton from "@/components/magnetic-button";
+import Link from "next/link";
 import { WorldMap } from "@/components/ui/world-map";
 
 const SLIDES = [
@@ -58,40 +58,86 @@ export default function HeroSlider() {
   return (
     <>
       <style>{`
+        /* ── Hero Wrapper ── */
         .hs-wrap {
           position: relative;
-          min-height: 580px;
+          height: 68vh;
+          min-height: 480px;
+          max-height: 640px;
           overflow: hidden;
           display: flex;
           align-items: center;
-          background-color: var(--color-swl-white);
-          border-bottom: 1px solid var(--color-swl-rule);
+          background-color: #1B2D45; /* Dark navy blue base */
         }
         @media (max-width: 1024px) {
           .hs-wrap {
+            height: auto;
             min-height: auto;
-            padding: 3.5rem 0;
+            max-height: none;
+            padding: 4rem 0 3rem;
           }
         }
 
-        /* Continuous slow Ken Burns zoom animation for cinematic visual movement */
-        @keyframes ken-burns {
-          0% { transform: scale(1.01); }
-          100% { transform: scale(1.08); }
-        }
-
-        .hs-bg {
+        /* ── Background Image: positioned on the RIGHT half ── */
+        .hs-img-right {
           position: absolute;
-          inset: 0;
-          background-size: cover;
-          background-position: center;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          width: 40%;
           transition: opacity 0.45s ease-in-out;
-          animation: ken-burns 12s ease-in-out infinite alternate;
-          will-change: opacity, transform;
+          z-index: 1;
         }
-        .hs-bg.out { opacity: 0; }
+        .hs-img-right img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          display: block;
+        }
+        .hs-img-right.out { opacity: 0; }
+        @media (max-width: 1024px) {
+          .hs-img-right {
+            width: 100%;
+            height: 50%;
+            top: auto;
+            bottom: 0;
+          }
+        }
 
-        /* Content container styling (Right Aligned on Desktop) */
+        /* ── Fade overlay: Solid left → transparent right ── */
+        .hs-fade {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          width: 40%;
+          z-index: 2;
+          background: linear-gradient(
+            to right,
+            #1B2D45 0%,
+            rgba(27, 45, 69, 0.85) 20%,
+            rgba(27, 45, 69, 0.4) 50%,
+            rgba(27, 45, 69, 0) 80%
+          );
+          pointer-events: none;
+        }
+        @media (max-width: 1024px) {
+          .hs-fade {
+            width: 100%;
+            height: 50%;
+            top: auto;
+            bottom: 0;
+            background: linear-gradient(
+              to bottom,
+              #1B2D45 0%,
+              rgba(27, 45, 69, 0.4) 60%,
+              rgba(27, 45, 69, 0) 100%
+            );
+          }
+        }
+
+        /* ── Content styling ── */
         .hs-content {
           position: relative;
           z-index: 10;
@@ -99,209 +145,134 @@ export default function HeroSlider() {
           opacity: 1;
           transform: translateY(0);
           max-width: 580px;
-          margin-left: auto; /* Push text to the right half on desktop */
+          padding: 2rem 0;
         }
-        @media (max-width: 1024px) {
-          .hs-content {
-            margin-left: 0;
-            max-width: 100%;
-          }
-        }
-        
         .hs-content.out {
           opacity: 0;
           transform: translateY(8px);
         }
 
         .hs-wrap .hs-h1 {
-          font-family: var(--font-display), Georgia, serif;
-          font-size: clamp(2.3rem, 4.5vw, 3.65rem);
-          font-weight: 400;
-          line-height: 1.12;
-          letter-spacing: -0.015em;
-          color: var(--color-swl-charcoal) !important;
-          margin: 0 0 0.1em;
+          font-family: var(--font-body), system-ui, sans-serif;
+          font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+          font-weight: 300;
+          line-height: 1.1;
+          letter-spacing: -0.02em;
+          color: #FFFFFF !important;
+          margin: 0 0 0.15em;
         }
         .hs-wrap .hs-h1 span {
-          color: var(--color-swl-blue) !important;
+          font-weight: 700;
+          display: block;
         }
 
         .hs-wrap .hs-body {
-          margin-top: 1.25rem;
-          margin-bottom: 2rem;
+          margin-top: 1.5rem;
+          margin-bottom: 2.5rem;
           font-size: 1.0625rem;
           line-height: 1.65;
-          color: var(--color-swl-slate) !important;
-          max-width: 480px;
+          color: rgba(255, 255, 255, 0.82) !important;
+          max-width: 420px;
         }
 
-        /* Footer navigation controls */
-        .hs-foot {
-          display: flex;
+        /* ── White outline button ── */
+        .hs-btn-outline {
+          display: inline-flex;
           align-items: center;
-          gap: 1.25rem;
-          margin-top: 2.5rem;
-        }
-        .hs-dots { display: flex; gap: 0.4rem; }
-        .hs-dot {
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          border: none;
-          background: rgba(3, 105, 161, 0.2);
-          padding: 0;
-          cursor: pointer;
-          transition: background 0.25s, transform 0.25s;
-        }
-        .hs-dot.on {
-          background: var(--color-swl-blue);
-          transform: scale(1.35);
-        }
-        .hs-bar-wrap {
-          flex: 1;
-          max-width: 80px;
-          height: 1px;
-          background: rgba(3, 105, 161, 0.12);
-          overflow: hidden;
-        }
-        .hs-bar {
-          height: 100%;
-          background: var(--color-swl-blue);
-          animation: hs-fill ${INTERVAL}ms linear infinite;
-        }
-        @keyframes hs-fill { from { width: 0% } to { width: 100% } }
-        .hs-wrap .hs-count {
-          font-size: 0.75rem;
-          color: var(--color-swl-slate) !important;
+          gap: 0.5rem;
+          background: transparent;
+          color: #FFFFFF;
+          border: 1.5px solid #FFFFFF;
+          padding: 0.75rem 1.75rem;
+          font-size: 0.9375rem;
           font-weight: 600;
-          letter-spacing: 0.04em;
-          margin-left: auto;
+          letter-spacing: 0.02em;
+          transition: all 0.3s ease;
+          text-decoration: none;
         }
-
-        /* Diagonal cut full-height panel for desktop slider window (LEFT Side) */
-        .hs-diagonal-pane {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          width: 46%;
-          z-index: 5;
-          clip-path: polygon(0% 0%, 82% 0%, 100% 100%, 0% 100%);
-          overflow: hidden;
-          background-color: var(--color-swl-mist);
-        }
-
-        @media (max-width: 1024px) {
-          .hs-diagonal-pane {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16/9;
-            clip-path: none;
-            border-radius: 12px;
-            margin-top: 2rem;
-            margin-bottom: 0.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-          }
+        .hs-btn-outline:hover {
+          background: #FFFFFF;
+          color: #1B2D45;
         }
       `}</style>
 
       <div className="hs-wrap">
-        {/* ── Full Height Diagonal Clipped Image Pane (Desktop Only - LEFT Side) ── */}
-        <div className="hidden lg:block hs-diagonal-pane">
-          <div
-            className={`hs-bg${fading ? " out" : ""}`}
-            style={{ backgroundImage: `url(${s.img})` }}
+        {/* ── Photo on the RIGHT side ── */}
+        <div className={`hs-img-right${fading ? " out" : ""}`}>
+          <img
+            src={s.img}
+            alt={`${s.headline} ${s.accent}`}
+            draggable={false}
           />
         </div>
 
-        {/* ── Animated World Map Background (Desktop Only - RIGHT Side behind text) ── */}
-        <div 
-          style={{ 
+        {/* ── Fade overlay between dark-blue left and photo right ── */}
+        <div className="hs-fade" />
+
+        {/* ── Dotted World Map (behind text on left ~70% of screen) ── */}
+        <div
+          style={{
             position: "absolute",
-            top: "8%",
-            bottom: "8%",
-            right: 0,
-            width: "54%",
-            opacity: 0.85,
-            zIndex: 1,
+            top: "3%",
+            bottom: "3%",
+            left: "0",
+            width: "70%",
+            opacity: 0.9,
+            zIndex: 3,
             pointerEvents: "none",
             display: "flex",
-            alignItems: "center"
+            alignItems: "center",
           }}
           className="hidden lg:flex"
         >
-          <WorldMap dots={[
-            {
-              start: { lat: 22.5, lng: 82.5, label: "India" },
-              end: { lat: 50.1109, lng: 8.6821, label: "Frankfurt" },
-            },
-            {
-              start: { lat: 22.5, lng: 82.5, label: "India" },
-              end: { lat: 40.7128, lng: -74.0060, label: "New York" },
-            },
-            {
-              start: { lat: 22.5, lng: 82.5, label: "India" },
-              end: { lat: 1.3521, lng: 103.8198, label: "Singapore" },
-            },
-            {
-              start: { lat: 22.5, lng: 82.5, label: "India" },
-              end: { lat: 25.2048, lng: 55.2708, label: "Dubai" },
-            },
-          ]} />
+          <WorldMap
+            dots={[
+              {
+                start: { lat: 22.5, lng: 82.5, label: "India" },
+                end: { lat: 50.1109, lng: 8.6821, label: "Frankfurt" },
+              },
+              {
+                start: { lat: 22.5, lng: 82.5, label: "India" },
+                end: { lat: 40.7128, lng: -74.006, label: "New York" },
+              },
+              {
+                start: { lat: 22.5, lng: 82.5, label: "India" },
+                end: { lat: 1.3521, lng: 103.8198, label: "Singapore" },
+              },
+              {
+                start: { lat: 22.5, lng: 82.5, label: "India" },
+                end: { lat: 25.2048, lng: 55.2708, label: "Dubai" },
+              },
+            ]}
+          />
         </div>
 
+        {/* ── Text Content (left side) ── */}
         <div className="swl-container relative z-10 w-full">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr",
-              gap: "3rem",
-              alignItems: "center"
-            }}
-            className="lg:!grid-cols-[0.85fr_1fr]"
-          >
-            {/* Empty spacer column on desktop to offset text from absolute left clipped panel */}
-            <div className="hidden lg:block" style={{ height: "420px", pointerEvents: "none" }} />
+          <div className={`hs-content${fading ? " out" : ""}`}>
+            <h1 className="hs-h1">
+              {s.headline}
+              <span>{s.accent}</span>
+            </h1>
 
-            {/* Right side: Animated slide text contents */}
-            <div className={`hs-content${fading ? " out" : ""}`}>
-              <h1 className="hs-h1">
-                {s.headline}<br />
-                <span>{s.accent}</span>
-              </h1>
+            <p className="hs-body">{s.body}</p>
 
-              <p className="hs-body">{s.body}</p>
-
-              <div style={{ position: "relative", width: "fit-content" }}>
-                <MagneticButton href={s.cta.href} className="swl-btn--primary">
-                  {s.cta.label}
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: "0.4rem" }}>
-                    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </MagneticButton>
-              </div>
-
-              {/* Mobile rendering of the slide image directly within flow */}
-              <div className="lg:hidden">
-                <div className="hs-diagonal-pane">
-                  <div
-                    className={`hs-bg${fading ? " out" : ""}`}
-                    style={{ backgroundImage: `url(${s.img})` }}
-                  />
-                </div>
-              </div>
-
-              <div className="hs-foot">
-                <div className="hs-dots">
-                  {SLIDES.map((_, i) => (
-                    <button key={i} className={`hs-dot${i === current ? " on" : ""}`} onClick={() => go(i)} aria-label={`Slide ${i + 1}`} />
-                  ))}
-                </div>
-                <div className="hs-bar-wrap">
-                  <div key={current} className="hs-bar" />
-                </div>
-                <span className="hs-count">0{current + 1} / 0{SLIDES.length}</span>
-              </div>
-            </div>
+            <Link href={s.cta.href} className="hs-btn-outline">
+              {s.cta.label}
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </Link>
           </div>
         </div>
       </div>
