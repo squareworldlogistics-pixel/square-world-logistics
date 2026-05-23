@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     "Square World Logistics",
   ],
   icons: {
-    icon: "/logo.png",
+    icon: "/icon.png",
   },
 };
 
