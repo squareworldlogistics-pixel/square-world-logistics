@@ -33,10 +33,10 @@ export default function Footer() {
               <img
                 src="/logo-footer.png?v=2" // Custom transparent logo
                 alt={`${COMPANY.name} Logo`}
-                width="171"
-                height="90"
+                width="237"
+                height="125"
                 style={{
-                  height: "90px",
+                  height: "125px",
                   width: "auto",
                   display: "block",
                 }}

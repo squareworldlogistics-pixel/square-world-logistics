@@ -260,11 +260,11 @@ function NavLink({
           transition: "opacity 0.3s ease",
         }}
       />
-      {/* Transit Plane — bottom = line_center - half_plane = (-4 + 1.5) - 9 = -11.5px */}
+      {/* Transit Plane — centered on the 2px line at bottom:-4px */}
       <span
         className="absolute"
         style={{
-          bottom: "-11.5px",
+          bottom: "-12.5px",
           opacity: isActive || hovered ? 1 : 0,
           left: hovered ? "calc(100% - 18px)" : isActive ? "calc(100% - 18px)" : "0px",
           transition: "left 0.55s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease",

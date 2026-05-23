@@ -47,36 +47,107 @@ export default async function ServicePage({ params }: Props) {
 
   const imageUrl = SERVICE_IMAGES[service.id] || SERVICE_IMAGES["air-express"];
 
+  const imagePositions: Record<string, string> = {
+    "air-express": "center 30%",
+    "air-freight": "center 40%",
+    "sea-freight": "center 30%",
+    "tailor-made": "center 30%",
+    "customs": "center 30%",
+  };
+
   return (
     <>
-      {/* ── Header Title Block (Pure white background, high contrast) ── */}
-      <section className="swl-section--tight" style={{ backgroundColor: "var(--color-swl-white)" }}>
-        <div className="swl-container">
-          <style>{`
-            .back-btn {
-              display: inline-flex;
-              align-items: center;
-              gap: 0.5rem;
-              font-size: 0.875rem;
-              font-weight: 500;
-              color: var(--color-swl-slate) !important;
-              text-decoration: none;
-              margin-bottom: 1.5rem;
-              transition: color 0.2s ease;
-            }
-            .back-btn:hover {
-              color: var(--color-swl-blue) !important;
-            }
-            .back-btn:hover .back-arrow {
-              transform: translateX(-4px);
-            }
-          `}</style>
-          
-          <Link href="/services" className="back-btn">
+      <style>{`
+        .svc-back {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.8125rem;
+          font-weight: 600;
+          color: rgba(255,255,255,0.7) !important;
+          text-decoration: none;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          transition: color 0.2s ease;
+        }
+        .svc-back:hover {
+          color: #fff !important;
+        }
+        .svc-back:hover .svc-back-arrow {
+          transform: translateX(-3px);
+        }
+        .svc-feature-item {
+          display: flex;
+          align-items: center;
+          gap: 0.875rem;
+          padding: 0.875rem 1.25rem;
+          background: var(--color-swl-bg);
+          border: 1px solid var(--color-swl-rule);
+          border-radius: 6px;
+          font-size: 0.875rem;
+          font-weight: 500;
+          color: var(--color-swl-charcoal);
+          transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .svc-feature-item:hover {
+          border-color: var(--color-swl-blue);
+          transform: translateY(-1px);
+        }
+        @media (max-width: 767px) {
+          .svc-hero { min-height: 220px !important; }
+          .svc-content-grid { grid-template-columns: 1fr !important; }
+          .svc-features-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+
+      {/* ── Cinematic Hero Banner ── */}
+      <section
+        className="svc-hero"
+        style={{
+          position: "relative",
+          minHeight: "300px",
+          display: "flex",
+          alignItems: "flex-end",
+          overflow: "hidden",
+        }}
+      >
+        {/* Background Image */}
+        <img
+          src={imageUrl}
+          alt={service.title}
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: imagePositions[service.id] || "center 30%",
+          }}
+        />
+        {/* Dark Gradient Overlay */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to top, rgba(10, 20, 40, 0.85) 0%, rgba(10, 20, 40, 0.5) 50%, rgba(10, 20, 40, 0.3) 100%)",
+          }}
+        />
+        {/* Content */}
+        <div
+          className="swl-container"
+          style={{
+            position: "relative",
+            zIndex: 1,
+            paddingTop: "3rem",
+            paddingBottom: "2.5rem",
+            width: "100%",
+          }}
+        >
+          <Link href="/services" className="svc-back" style={{ marginBottom: "1.5rem", display: "inline-flex" }}>
             <svg
-              className="back-arrow"
-              width="16"
-              height="16"
+              className="svc-back-arrow"
+              width="14"
+              height="14"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -88,203 +159,191 @@ export default async function ServicePage({ params }: Props) {
               <line x1="19" y1="12" x2="5" y2="12" />
               <polyline points="12 19 5 12 12 5" />
             </svg>
-            Back to Services
+            All Services
           </Link>
-          
-          <br />
-          <span
-            style={{
-              display: "inline-block",
-              color: "var(--color-swl-blue)",
-              fontSize: "0.75rem",
-              fontWeight: 700,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              marginBottom: "0.75rem",
-            }}
-          >
-            {service.subtitle}
-          </span>
-          <h1
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(2rem, 5vw, 3.5rem)",
-              fontWeight: 700,
-              color: "var(--color-swl-charcoal)",
-              lineHeight: 1.1,
-              maxWidth: "900px",
-              margin: 0,
-            }}
-          >
-            {service.title}
-          </h1>
-        </div>
-      </section>
-
-      {/* ── Flat Aspect-Ratio Banner Image (No overlay, sharp edges) ── */}
-      <section style={{ backgroundColor: "var(--color-swl-white)", paddingBottom: "3rem" }}>
-        <div className="swl-container">
-          <div
-            style={{
-              width: "100%",
-              height: "clamp(240px, 40vw, 380px)",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              src={imageUrl}
-              alt={service.title}
+          <div>
+            <span
               style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
+                display: "inline-block",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.6)",
+                marginBottom: "0.75rem",
               }}
-            />
+            >
+              {service.subtitle}
+            </span>
+            <h1
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(2rem, 5vw, 3.25rem)",
+                fontWeight: 700,
+                color: "#fff",
+                lineHeight: 1.1,
+                letterSpacing: "-0.02em",
+                margin: 0,
+                maxWidth: "700px",
+              }}
+            >
+              {service.title}
+            </h1>
           </div>
         </div>
       </section>
 
-      {/* ── Content Grid (Asymmetric, completely flat, borderless) ── */}
-      <section className="swl-section" style={{ backgroundColor: "var(--color-swl-white)" }}>
+      {/* ── Content Section ── */}
+      <section style={{ backgroundColor: "var(--color-swl-white)", padding: "3rem 0 2rem" }}>
         <div className="swl-container">
-          <div 
-            style={{ 
-              display: "grid", 
-              gridTemplateColumns: "1fr", 
-              gap: "2.5rem",
-              borderTop: "1px solid var(--color-swl-rule)",
-              paddingTop: "2.5rem",
+          <div
+            className="svc-content-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1.4fr 0.6fr",
+              gap: "4rem",
+              maxWidth: "1100px",
+              margin: "0 auto",
+              alignItems: "start",
             }}
-            className="lg:!grid-cols-[1.3fr_0.7fr]"
           >
-            {/* Left Column: Description */}
+            {/* Left: Description */}
             <div>
               <h2
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "1.5rem",
+                  fontSize: "1.375rem",
                   fontWeight: 700,
                   color: "var(--color-swl-charcoal)",
-                  marginBottom: "1.5rem",
+                  marginBottom: "0.75rem",
                 }}
               >
-                Service Overview
+                Overview
               </h2>
+              <div
+                style={{
+                  width: "32px",
+                  height: "2px",
+                  backgroundColor: "var(--color-swl-blue)",
+                  marginBottom: "1.25rem",
+                }}
+              />
               <p
                 style={{
                   fontSize: "1rem",
-                  lineHeight: "1.8",
+                  lineHeight: 1.8,
                   color: "var(--color-swl-slate)",
-                  maxWidth: "750px",
+                  margin: 0,
                 }}
               >
                 {service.description}
               </p>
             </div>
 
-            {/* Right Column: Key Features (Flat list to match minimal rules) */}
-            <div>
-              <h2
+            {/* Right: Quick Contact Card */}
+            <div
+              style={{
+                backgroundColor: "var(--color-swl-bg)",
+                color: "var(--color-swl-charcoal)",
+                padding: "2rem",
+                borderRadius: "8px",
+                border: "1px solid var(--color-swl-rule)",
+              }}
+            >
+              <h3
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "1.5rem",
+                  fontSize: "1.125rem",
                   fontWeight: 700,
+                  marginBottom: "0.75rem",
                   color: "var(--color-swl-charcoal)",
+                }}
+              >
+                Need a Quote?
+              </h3>
+              <p
+                style={{
+                  fontSize: "0.875rem",
+                  lineHeight: 1.6,
+                  color: "var(--color-swl-slate)",
                   marginBottom: "1.5rem",
                 }}
               >
-                Key Features
-              </h2>
-              <ul
-                style={{
-                  listStyle: "none",
-                  padding: 0,
-                  margin: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1.25rem",
-                }}
+                Get tailored pricing for your {service.title.toLowerCase()} needs.
+              </p>
+              <MagneticButton
+                href={`/contact?service=${service.id}`}
+                className="swl-btn--primary"
               >
-                {service.features.map((feature, i) => (
-                  <li
-                    key={i}
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: "0.75rem",
-                      fontSize: "0.9375rem",
-                      color: "var(--color-swl-charcoal)",
-                      lineHeight: 1.5,
-                      fontWeight: 500,
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "6px",
-                        height: "6px",
-                        backgroundColor: "var(--color-swl-blue)",
-                        flexShrink: 0,
-                        marginTop: "0.5rem",
-                      }}
-                    />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+                Request Quote
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ marginLeft: "0.5rem" }}
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </MagneticButton>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Bottom CTA ────────────────────────── */}
+      {/* ── Key Capabilities Grid ── */}
       <section
-        className="swl-section"
         style={{
           backgroundColor: "var(--color-swl-white)",
           borderTop: "1px solid var(--color-swl-rule)",
+          padding: "2.5rem 0 3rem",
         }}
       >
-        <div className="swl-container" style={{ textAlign: "center" }}>
-          <div style={{ maxWidth: "600px", margin: "0 auto" }}>
+        <div className="swl-container">
+          <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
             <h2
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "2rem",
-                marginBottom: "1rem",
+                fontSize: "1.375rem",
+                fontWeight: 700,
                 color: "var(--color-swl-charcoal)",
-                lineHeight: 1.1,
+                marginBottom: "1.5rem",
               }}
             >
-              Ready to get started?
+              Key Capabilities
             </h2>
-            <p
+            <div
+              className="svc-features-grid"
               style={{
-                fontSize: "1rem",
-                color: "var(--color-swl-slate)",
-                marginBottom: "2rem",
-                lineHeight: "1.6",
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+                gap: "0.75rem",
               }}
             >
-              Contact our team today to discuss how our {service.title.toLowerCase()} can streamline your supply chain.
-            </p>
-            <MagneticButton href={`/contact?service=${service.id}`} className="swl-btn--primary">
-              Contact Us Now
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{ marginLeft: "0.5rem" }}
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </MagneticButton>
+              {service.features.map((feature, i) => (
+                <div key={i} className="svc-feature-item">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="var(--color-swl-blue)"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ flexShrink: 0 }}
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  {feature}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
