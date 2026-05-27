@@ -9,7 +9,7 @@ const BOTTOM = 40;
 export default function PageFlowPath() {
   const [progress, setProgress] = useState(0);
   const [vh, setVh] = useState(800);
-  const [rotation, setRotation] = useState(90);
+  const [rotation, setRotation] = useState(180);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
@@ -29,10 +29,10 @@ export default function PageFlowPath() {
 
       const diff = currentScroll - lastScrollY.current;
       if (diff > 5) {
-        setRotation(90); // Scrolling down -> face down
+        setRotation(180); // Scrolling down -> face down
         lastScrollY.current = currentScroll;
       } else if (diff < -5) {
-        setRotation(-90); // Scrolling up -> face up
+        setRotation(0); // Scrolling up -> face up
         lastScrollY.current = currentScroll;
       }
     };
@@ -83,21 +83,17 @@ export default function PageFlowPath() {
           strokeLinecap="round"
         />
 
-        {/* Plane — outer <g> handles vertical translation, inner <g> handles smooth rotation */}
+        {/* Plane — outer <g> handles vertical translation, inner <g> handles smooth rotation and scale */}
         <g transform={`translate(${X}, ${planeY})`}>
           <g
             style={{
-              transform: `rotate(${rotation}deg)`,
-              transformOrigin: "0px 0px",
-              transition: "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
+              transform: `rotate(${rotation}deg) scale(1.5)`,
+              transformOrigin: "0px 6px",
+              transition: "transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1)",
             }}
             fill="rgba(3,105,161,0.85)"
           >
-            <polygon points="11,0  4,1.3  -9,1.8  -9,-1.8  4,-1.3" />
-            <polygon points="3,-1.2  -1,-11  -5,-9.5  -0.5,-1.2" />
-            <polygon points="3,1.2  -1,11  -5,9.5  -0.5,1.2" />
-            <polygon points="-7,-1.5  -9.5,-5  -11,-4.5  -8.5,-1.5" />
-            <polygon points="-7,1.5  -9.5,5  -11,4.5  -8.5,1.5" />
+            <path d="M 0,-16 C 1.5,-16 2.5,-12 2.5,-6 L 2.5,9 C 2.5,12 1.5,15 0,16 C -1.5,15 -2.5,12 -2.5,9 L -2.5,-6 C -2.5,-12 -1.5,-16 0,-16 Z M 2.5,-3 L 14.5,6 C 15.2,6.3 15.2,7.0 14.5,7.3 C 14.1,7.5 13.7,7.5 13.3,7.3 L 2.5,2 Z M -2.5,-3 L -14.5,6 C -15.2,6.3 -15.2,7.0 -14.5,7.3 C -14.1,7.5 -13.7,7.5 -13.3,7.3 L -2.5,2 Z M 2.5,11 L 8,14 C 8.5,14.2 8.5,14.8 8,15 C 7.8,15.1 7.6,15.1 7.4,15 L 2.5,14.5 Z M -2.5,11 L -8,14 C -8.5,14.2 -8.5,14.8 -8,15 C -7.8,15.1 -7.6,15.1 -7.4,15 L -2.5,14.5 Z" />
           </g>
         </g>
       </svg>

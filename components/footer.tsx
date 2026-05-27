@@ -31,13 +31,13 @@ export default function Footer() {
               }}
             >
               <img
-                src="/logo-footer.png?v=2" // Custom transparent logo
+                src="/logo-footer.png?v=3" // Custom transparent logo
                 alt={`${COMPANY.name} Logo`}
-                width="237"
-                height="125"
+                width="260"
+                height="137"
                 style={{
-                  height: "125px",
-                  width: "auto",
+                  width: "260px",
+                  height: "auto",
                   display: "block",
                 }}
               />
@@ -158,7 +158,7 @@ export default function Footer() {
           </div>
 
           {/* Column 4: Contact Info */}
-          <div>
+          <div className="md:-ml-12 lg:-ml-16">
             <h4
               style={{
                 fontSize: "0.75rem",
@@ -215,7 +215,7 @@ export default function Footer() {
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
-                <a href={`mailto:${COMPANY.email}`} style={{ fontSize: "0.875rem", transition: "color 0.2s ease" }} onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-white)")} onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.8)")}>
+                <a href={`mailto:${COMPANY.email}`} style={{ fontSize: "0.875rem", transition: "color 0.2s ease", wordBreak: "break-all" }} onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-white)")} onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.8)")}>
                   {COMPANY.email}
                 </a>
               </div>

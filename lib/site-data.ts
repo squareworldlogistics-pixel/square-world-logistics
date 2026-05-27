@@ -14,10 +14,10 @@ export const COMPANY = {
   tagline: "Global Logistics. Simplified.",
   established: 2023,
   countriesCovered: "220+",
-  email: " sales.squareworldlogistics@gmail.com",
+  email: "sales.squareworldlogistics@gmail.com",
   phone2: "+91 6355275515",
   phone: "+91 7400424550",
-  address: " C-16, M-CUBE THE BUSINESS HUB, N H NO.48, SEARVICE ROAD, OPP. TALUKA SEVA SADAN,BALITHA, VAPI,GUJARAT 396191",
+  address: "C-16, M-CUBE THE BUSINESS HUB, N H NO.48, SEARVICE ROAD, OPP. TALUKA SEVA SADAN,BALITHA, VAPI,GUJARAT 396191",
   officeHours: "Mon - Sat: 10:00 AM TO 06:00 PM",
   mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3722.9646329682!2d72.9096952!3d20.3962641!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0cfeda8cd4c5f%3A0xe091940fac1fe2ac!2sSQUARE%20WORLD%20LOGISTICS!5e0!3m2!1sen!2sin!4v1715200000000!5m2!1sen!2sin",
   googleProfileUrl: "https://share.google/nrK1G00CpPh7KJDTH",
@@ -234,23 +234,23 @@ export const LEADERSHIP = [
   {
     name: "Priyank Mistry",
     role: "Founder",
-    image: "/founder.png",
-    vision: "To redefine global logistics through radical transparency and unwavering reliability. We didn't just build a shipping company; we built a promise of excellence that spans every border.",
+    image: "/founder-new.jpg",
+    vision: "Our operational strength lies in our agility. By combining human expertise with streamlined processes, we ensure that every parcel tells a story of successful global connection.",
     ethics: [
-      "Absolute Transparency",
-      "Customer-First Mindset",
-      "Proactive Problem Solving"
+      "Operational Integrity",
+      "Continuous Innovation",
+      "Collaborative Growth"
     ]
   },
   {
     name: "Spandan Behera",
     role: "Co-Founder",
     image: "/co-founder.png",
-    vision: "Our operational strength lies in our agility. By combining human expertise with streamlined processes, we ensure that every parcel tells a story of successful global connection.",
+    vision: "To redefine global logistics through radical transparency and unwavering reliability. We didn't just build a shipping company; we built a promise of excellence that spans every border.",
     ethics: [
-      "Operational Integrity",
-      "Continuous Innovation",
-      "Collaborative Growth"
+      "Absolute Transparency",
+      "Customer-First Mindset",
+      "Proactive Problem Solving"
     ]
   }
 ] as const;
