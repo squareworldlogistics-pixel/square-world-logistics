@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 const X = 28;
 const TOP = 104;
 const BOTTOM = 40;
 
 export default function PageFlowPath() {
+  const pathname = usePathname();
   const [progress, setProgress] = useState(0);
   const [vh, setVh] = useState(800);
   const [rotation, setRotation] = useState(180);
@@ -40,6 +42,10 @@ export default function PageFlowPath() {
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  if (pathname?.startsWith("/coming-soon") || pathname?.startsWith("/maintenance")) {
+    return null;
+  }
 
   const trackH = vh - TOP - BOTTOM;
   const planeY = TOP + progress * trackH;

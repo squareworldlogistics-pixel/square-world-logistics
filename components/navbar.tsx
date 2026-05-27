@@ -28,6 +28,10 @@ export default function Navbar() {
     };
   }, [isMobileOpen]);
 
+  if (pathname?.startsWith("/coming-soon") || pathname?.startsWith("/maintenance")) {
+    return null;
+  }
+
   return (
     <>
       <header

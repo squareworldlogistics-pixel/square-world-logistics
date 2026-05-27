@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 /**
  * Premium Scroll to Top button.
@@ -8,20 +9,30 @@ import { useState, useEffect } from "react";
  * Smoothly scrolls back to top when clicked.
  */
 export default function ScrollToTopButton() {
+  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.scrollY > 400) {
+      const scrollPos = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+      if (scrollPos > 400) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
       }
     };
 
-    window.addEventListener("scroll", toggleVisibility);
-    return () => window.removeEventListener("scroll", toggleVisibility);
+    window.addEventListener("scroll", toggleVisibility, { passive: true });
+    
+    // Trigger immediately on mount to capture any mid-scroll page states
+    toggleVisibility();
+
+    return () => window.removeEventListener("scroll", toggleVisibility, { passive: true } as any);
   }, []);
+
+  if (pathname?.startsWith("/coming-soon") || pathname?.startsWith("/maintenance")) {
+    return null;
+  }
 
   const scrollToTop = () => {
     window.scrollTo({

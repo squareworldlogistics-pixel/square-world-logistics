@@ -1,13 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { COMPANY, NAV_LINKS } from "@/lib/site-data";
 
 /**
  * Premium blue footer matching primary brand color with 100% clean white high-contrast typography.
  */
 export default function Footer() {
+  const pathname = usePathname();
   const year = new Date().getFullYear();
+
+  if (pathname?.startsWith("/coming-soon")) {
+    return null;
+  }
 
   return (
     <footer

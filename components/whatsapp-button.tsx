@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { COMPANY } from "@/lib/site-data";
 
 /**
@@ -7,6 +8,12 @@ import { COMPANY } from "@/lib/site-data";
  * Placed in layout.tsx to remain accessible globally.
  */
 export default function WhatsappButton() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith("/coming-soon")) {
+    return null;
+  }
+
   // Format phone number by removing spaces, dashes, and the '+' sign
   const cleanNumber = COMPANY.phone.replace(/[+\s-]/g, "");
   const whatsappUrl = `https://wa.me/${cleanNumber}?text=Hello%20${encodeURIComponent(COMPANY.name)}!%20I%20would%20like%20to%20inquire%20about%20your%20logistics%20services.`;
