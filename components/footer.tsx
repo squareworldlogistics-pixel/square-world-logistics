@@ -35,6 +35,7 @@ export default function Footer() {
                 display: "inline-block",
                 marginBottom: "0.75rem",
                 marginTop: "-2.5rem",
+                marginLeft: "-1.5rem",
               }}
             >
               <img
