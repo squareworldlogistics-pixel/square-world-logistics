@@ -8,11 +8,11 @@ export async function GET() {
   try {
     const { data, error } = await supabase
       .from("posts")
-      .select("content")
+      .select("body")
       .eq("slug", "__site_settings__")
       .single();
 
-    if (error || !data) {
+    if (error || !data || !data.body) {
       // Fallback default configurations
       return NextResponse.json({
         comingSoonActive: true,
@@ -25,7 +25,7 @@ export async function GET() {
       });
     }
 
-    return NextResponse.json(JSON.parse(data.content), {
+    return NextResponse.json(JSON.parse(data.body), {
       headers: {
         "Cache-Control": "no-store, max-age=0, must-revalidate",
       }
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
       const { error: updateError } = await supabase
         .from("posts")
         .update({
-          content: JSON.stringify(newSettings),
+          body: JSON.stringify(newSettings),
         })
         .eq("slug", "__site_settings__");
       error = updateError;
@@ -85,8 +85,7 @@ export async function POST(request: Request) {
           slug: "__site_settings__",
           title: "Site Settings Metadata",
           excerpt: "Launch status configurations.",
-          body: "DO NOT EDIT OR DELETE. Stored database site configurations.",
-          content: JSON.stringify(newSettings),
+          body: JSON.stringify(newSettings),
         });
       error = insertError;
     }
