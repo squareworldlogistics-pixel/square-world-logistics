@@ -23,6 +23,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.squareworldlogistics.com"),
   title: {
     default: `${COMPANY.name} — Global Logistics. Simplified.`,
     template: `%s | ${COMPANY.name}`,
@@ -38,7 +39,45 @@ export const metadata: Metadata = {
     "customs clearance",
     "international shipping",
     "Square World Logistics",
+    "freight forwarding",
+    "global shipping",
   ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: `${COMPANY.name} — Global Logistics. Simplified.`,
+    description: "Reliable global shipping and freight solutions across 220+ countries. End-to-end logistics support including air express, air freight, sea freight, customs clearance, and tailor-made solutions.",
+    url: "https://www.squareworldlogistics.com",
+    siteName: COMPANY.name,
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: `${COMPANY.name} Logo`,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${COMPANY.name} — Global Logistics. Simplified.`,
+    description: "Reliable global shipping and freight solutions across 220+ countries. End-to-end logistics support including air express, air freight, sea freight, customs clearance, and tailor-made solutions.",
+    images: ["/logo.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/icon.png",
   },

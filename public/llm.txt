@@ -1,33 +1,78 @@
 # Square World Logistics (SWL)
 
-Global Logistics. Simplified.
+> Global Logistics. Simplified.
 
-Square World Logistics is a young, dynamic, and proactive logistics company established in 2023, dedicated to delivering reliable global shipping and freight solutions.
+Square World Logistics is a dynamic, proactive global logistics and freight forwarding provider established in 2023. We offer comprehensive, end-to-end logistics solutions across 220+ countries, allowing businesses to expand their international reach while we handle transport, documentation, and regulatory complexities.
+
+---
 
 ## Core Services
 
-- **International Air Express**: Fast and secure export/import express delivery via trusted global courier network partners.
-- **International Air Freight**: Efficient airport-to-airport and door-to-door cargo transportation.
-- **International Sea Freight**: Economical and scalable FCL & LCL shipping solutions worldwide.
-- **Customs Clearance**: Hassle-free import/export documentation and compliance processing.
-- **Tailor-Made Solutions**: Customized logistics strategies matching specific business needs and budgets.
+### 1. International Air Express (Export & Import)
+Fast, secure door-to-door courier services for time-sensitive packages and documents worldwide.
+*   **Key Capabilities**: Door-to-door delivery, worldwide network coverage, priority handling, real-time tracking, secure transit.
 
-## Key Statistics
+### 2. International Air Freight (Export & Import)
+Efficient commercial cargo shipping with flexible consolidation options.
+*   **Key Capabilities**: Commercial cargo handling, consolidations, airport-to-airport & door-to-door options, customs documentation, time-critical shipment management.
 
-- **Reach**: 220+ Countries Served
-- **Established**: 2023
-- **Support**: 24/7 Global Availability
+### 3. International Sea Freight (Export & Import)
+Economical, scalable maritime shipping solutions for bulk and large-scale shipping.
+*   **Key Capabilities**: Full Container Load (FCL), Less than Container Load (LCL), global port connectivity, consolidation services, end-to-end coordination.
 
-## Contact Information
+### 4. Tailor-Made Freight Solutions (Custom Logistics)
+Bespoke logistics planning designed around custom budgets, timelines, and freight requirements.
+*   **Key Capabilities**: Custom cargo routing, optimized transport methods, budget-friendly strategies, dedicated support, flexible shipping options.
 
-- **Website**: https://www.squareworldlogistics.com
-- **Email**: info@squareworldlogistics.com
-- **Phone 1**: +91 7400424660
-- **Phone 2**: +91 8735975515
-- **Address**: TALUKA SEVA SADAN, C-16, M-CUBE THE BUSINESS HUB, N H No.48, SEARVICE ROAD, opp. VAPI, Balitha, Vapi, Gujarat 396191
-- **Office Hours**: Mon - Sat: 9:00 AM - 6:00 PM
+### 5. Customs Clearance Service (Import & Export)
+Hassle-free customs brokerage and regulatory compliance management.
+*   **Key Capabilities**: Full import/export documentation, duty/compliance calculations, processing, regulatory guidance, fast-track clearing.
 
-## Legal
+---
 
-- **Privacy Policy**: https://www.squareworldlogistics.com/privacy
-- **Terms of Service**: https://www.squareworldlogistics.com/terms
+## Corporate Profile & Leadership
+
+*   **Established**: 2023
+*   **Scope**: 220+ Countries Served
+*   **Support**: 24/7 Dedicated Logistics Assistance
+*   **Philosophy**: We believe logistics is about building trust, ensuring radical transparency, and accelerating business growth.
+
+### Leadership
+*   **Priyank Mistry (Founder)**: Focuses on redefining logistics through radical transparency, operational integrity, and a customer-first mindset.
+*   **Spandan Behera (Co-Founder)**: Directs operations with agility, ensuring human expertise and streamlined systems connect every parcel successfully.
+
+---
+
+## Operations & Compliance Information
+
+### Standard Incoterms Supported
+*   **EXW (Ex Works)**: Buyer handles all transit costs and risks from the seller's premises.
+*   **FOB (Free On Board)**: Seller delivers goods on board; risk transfers at ship's rail.
+*   **CIF (Cost, Insurance & Freight)**: Seller pays port delivery and basic insurance; risk transfers at origin.
+*   **DDP (Delivered Duty Paid)**: Seller handles all transport, duties, taxes, and risks to the destination.
+*   **DAP (Delivered At Place)**: Seller delivers to destination; buyer manages customs clearance and import duties.
+
+### Prohibited Items (Cannot be Shipped)
+*   Narcotic Drugs & Psychotropic Substances
+*   Firearms, Ammunition & Weapons
+*   Explosives & Flammable Materials
+*   Radioactive & Corrosive Substances
+*   Currency, Coins & Bullion
+*   Precious Stones & High-Value Jewellery
+*   Live Animals & Rare Plant Species
+*   Counterfeit or Obscene Materials
+*   Hazardous Waste & Toxic Chemicals
+
+### Integrated Global Courier Partners
+*   **FedEx**, **UPS**, **DHL**, **Aramex**
+
+---
+
+## Contact & Head Office Location
+
+*   **Email**: sales.squareworldlogistics@gmail.com
+*   **Phone 1 (Operations)**: +91 7400424550
+*   **Phone 2 (Support)**: +91 6355275515
+*   **Office Hours**: Mon - Sat: 10:00 AM to 06:00 PM
+*   **Corporate Address**: C-16, M-Cube The Business Hub, N H No.48, Service Road, Opp. Taluka Seva Sadan, Balitha, Vapi, Gujarat, India (Zip: 396191)
+*   **Official Website**: [https://www.squareworldlogistics.com](https://www.squareworldlogistics.com)

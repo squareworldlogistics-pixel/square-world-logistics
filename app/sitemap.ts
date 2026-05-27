@@ -1,29 +1,45 @@
 import { MetadataRoute } from "next";
 import { SERVICES } from "@/lib/site-data";
+import { supabase } from "@/lib/supabase";
 
-/**
- * Automatically generates sitemap.xml for SEO.
- */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.squareworldlogistics.com";
 
-  // Static routes
-  const routes = ["", "/services", "/about", "/contact", "/privacy", "/terms"].map(
-    (route) => ({
-      url: `${baseUrl}${route}`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: route === "" ? 1 : 0.8,
-    })
-  );
-
-  // Dynamic service routes
-  const serviceRoutes = SERVICES.map((service) => ({
-    url: `${baseUrl}/services/${service.id}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
+  // Base routes
+  const routes = ["", "/services", "/about", "/blog", "/contact"].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "daily" as const,
+    priority: route === "" ? 1.0 : route === "/services" ? 0.9 : 0.8,
   }));
 
-  return [...routes, ...serviceRoutes];
+  // Service routes
+  const serviceRoutes = SERVICES.map((service) => ({
+    url: `${baseUrl}/services/${service.id}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
+  // Blog posts dynamic routes
+  let blogRoutes: any[] = [];
+  try {
+    const { data: posts } = await supabase
+      .from("posts")
+      .select("slug, created_at")
+      .order("created_at", { ascending: false });
+
+    if (posts) {
+      blogRoutes = posts.map((post) => ({
+        url: `${baseUrl}/blog/${post.slug}`,
+        lastModified: post.created_at ? new Date(post.created_at).toISOString() : new Date().toISOString(),
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+      }));
+    }
+  } catch (error) {
+    console.error("Error generating sitemap blog routes:", error);
+  }
+
+  return [...routes, ...serviceRoutes, ...blogRoutes];
 }
