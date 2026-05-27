@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { COMPANY, NAV_LINKS } from "@/lib/site-data";
+import { useEffect, useState } from "react";
+import { COMPANY, NAV_LINKS, SOCIAL_LINKS } from "@/lib/site-data";
 
 /**
  * Premium blue footer matching primary brand color with 100% clean white high-contrast typography.
@@ -10,6 +11,11 @@ import { COMPANY, NAV_LINKS } from "@/lib/site-data";
 export default function Footer() {
   const pathname = usePathname();
   const year = new Date().getFullYear();
+  const [email, setEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    setEmail(COMPANY.email);
+  }, []);
 
   if (pathname?.startsWith("/coming-soon")) {
     return null;
@@ -63,8 +69,10 @@ export default function Footer() {
             <div style={{ display: "flex", gap: "1rem" }}>
               {/* Social Icons */}
               {[
-                { id: "linkedin", href: "https://www.linkedin.com/company/square_world_logistics/" },
-                { id: "facebook", href: "https://www.facebook.com/profile.php?id=61583040150446" }
+                { id: "linkedin", href: SOCIAL_LINKS.linkedin },
+                { id: "facebook", href: SOCIAL_LINKS.facebook },
+                ...(SOCIAL_LINKS.instagram ? [{ id: "instagram", href: SOCIAL_LINKS.instagram }] : []),
+                ...(SOCIAL_LINKS.x ? [{ id: "x", href: SOCIAL_LINKS.x }] : []),
               ].map((social) => (
                 <a
                   key={social.id}
@@ -92,11 +100,13 @@ export default function Footer() {
                     e.currentTarget.style.color = "var(--color-swl-white)";
                     e.currentTarget.style.transform = "translateY(0)";
                   }}
-                  aria-label={social.id}
+                  aria-label={`Follow us on ${social.id}`}
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     {social.id === "linkedin" && <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z M2 9h4v12H2z M4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" />}
                     {social.id === "facebook" && <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />}
+                    {social.id === "instagram" && <><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></>}
+                    {social.id === "x" && <path d="M4 4l11.733 16h4.267l-11.733 -16h-4.267zm6.525 0l7.475 16m-14 -16l7.475 16" />}
                   </svg>
                 </a>
               ))}
@@ -221,14 +231,14 @@ export default function Footer() {
                 </div>
               </div>
 
-              {/* Email */}
+              {/* Email — Obfuscated */}
               <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-swl-white)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: "2px" }}>
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
-                <a href={`mailto:${COMPANY.email}`} style={{ fontSize: "0.875rem", transition: "color 0.2s ease", wordBreak: "break-all" }} onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-white)")} onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.8)")}>
-                  {COMPANY.email}
+                <a href={email ? `mailto:${email}` : "#"} style={{ fontSize: "0.875rem", transition: "color 0.2s ease", wordBreak: "break-all" }} onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-white)")} onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.8)")}>
+                  {email || "Contact Us"}
                 </a>
               </div>
             </div>

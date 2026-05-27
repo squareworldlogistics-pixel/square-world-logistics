@@ -20,6 +20,7 @@ export const COMPANY = {
   address: "C-16, M-CUBE THE BUSINESS HUB, N H NO.48, SEARVICE ROAD, OPP. TALUKA SEVA SADAN,BALITHA, VAPI,GUJARAT 396191",
   officeHours: "Mon - Sat: 10:00 AM TO 06:00 PM",
   mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3722.9646329682!2d72.9096952!3d20.3962641!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0cfeda8cd4c5f%3A0xe091940fac1fe2ac!2sSQUARE%20WORLD%20LOGISTICS!5e0!3m2!1sen!2sin!4v1715200000000!5m2!1sen!2sin",
+  mapStaticUrl: "https://www.google.com/maps/place/SQUARE+WORLD+LOGISTICS/@20.3962641,72.9096952,17z",
   googleProfileUrl: "https://share.google/nrK1G00CpPh7KJDTH",
 } as const;
 
@@ -303,4 +304,17 @@ export const SUSTAINABILITY = {
       icon: "users"
     }
   ]
+} as const;
+
+export const SOCIAL_LINKS = {
+  linkedin: "https://www.linkedin.com/company/square_world_logistics/",
+  facebook: "https://www.facebook.com/profile.php?id=61583040150446",
+  instagram: "", // TODO: Add Instagram URL when available
+  x: "", // TODO: Add X (Twitter) URL when available
+  youtube: "", // TODO: Add YouTube channel URL when available
+} as const;
+
+export const GEO_COORDS = {
+  latitude: 20.3962641,
+  longitude: 72.9096952,
 } as const;

@@ -22,6 +22,20 @@ import {
 export default function Home() {
   return (
     <>
+      {/* ── SEO: Semantic text content for search engines ── */}
+      <article className="sr-only" aria-hidden="true">
+        <h2>Square World Logistics — International Freight Forwarding Company in Vapi, Gujarat, India</h2>
+        <p>
+          Square World Logistics is a leading international logistics and freight forwarding company based in Vapi, Gujarat, India.
+          Established in 2023, we provide comprehensive global shipping solutions including international air express courier services,
+          air freight cargo transportation, sea freight (FCL and LCL), customs clearance and brokerage, and tailor-made freight solutions.
+          Our services cover over 220 countries worldwide through trusted global courier network partners including FedEx, UPS, DHL, and Aramex.
+          We specialize in export and import logistics for businesses of all sizes, offering door-to-door delivery, real-time shipment tracking,
+          customs documentation support, and 24/7 dedicated logistics assistance. Whether you need to ship packages, documents, or commercial cargo
+          internationally, Square World Logistics delivers reliable, transparent, and cost-effective freight forwarding solutions.
+        </p>
+      </article>
+
       {/* ── Hero Slider ───────────────────────── */}
       <HeroSlider />
 
@@ -115,7 +129,7 @@ export default function Home() {
             {/* 220+ Countries — Compass Rose icon */}
             <div style={{ borderBottom: "1px solid var(--color-swl-rule)", paddingBottom: "1.5rem" }}>
               <div style={{ marginBottom: "1.25rem" }}>
-                <img src="/icon-global.png" alt="" width="52" height="52" style={{ display: "block" }} />
+                <img src="/icon-global.png" alt="Global reach icon — shipping to over 220 countries worldwide" width="52" height="52" style={{ display: "block" }} />
               </div>
               <div style={{
                 fontFamily: "var(--font-body)",
@@ -150,7 +164,7 @@ export default function Home() {
             {/* Safe & Secure — Diamond Vault icon */}
             <div style={{ borderBottom: "1px solid var(--color-swl-rule)", paddingBottom: "1.5rem" }}>
               <div style={{ marginBottom: "1.25rem" }}>
-                <img src="/icon-secure.png" alt="" width="52" height="52" style={{ display: "block" }} />
+                <img src="/icon-secure.png" alt="Secure shipping — end-to-end cargo security and accountability" width="52" height="52" style={{ display: "block" }} />
               </div>
               <div style={{
                 fontFamily: "var(--font-body)",
@@ -185,7 +199,7 @@ export default function Home() {
             {/* On-Time Delivery — Paper Plane + Checkmark Trail icon */}
             <div style={{ borderBottom: "1px solid var(--color-swl-rule)", paddingBottom: "1.5rem" }}>
               <div style={{ marginBottom: "1.25rem" }}>
-                <img src="/icon-ontime.png" alt="" width="52" height="52" style={{ display: "block" }} />
+                <img src="/icon-ontime.png" alt="On-time delivery with real-time shipment tracking" width="52" height="52" style={{ display: "block" }} />
               </div>
               <div style={{
                 fontFamily: "var(--font-body)",
@@ -220,7 +234,7 @@ export default function Home() {
             {/* 24/7 Support — Signal Beacon icon */}
             <div style={{ borderBottom: "1px solid var(--color-swl-rule)", paddingBottom: "1.5rem" }}>
               <div style={{ marginBottom: "1.25rem" }}>
-                <img src="/icon-support.png" alt="" width="52" height="52" style={{ display: "block" }} />
+                <img src="/icon-support.png" alt="24/7 premium logistics support and account management" width="52" height="52" style={{ display: "block" }} />
               </div>
               <div style={{
                 fontFamily: "var(--font-body)",

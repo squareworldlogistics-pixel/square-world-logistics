@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { WorldMap } from "@/components/ui/world-map";
 
 const SLIDES = [
@@ -11,6 +12,7 @@ const SLIDES = [
     body: "Comprehensive shipping and express freight solutions serving over 220+ countries with complete operational precision.",
     cta: { label: "Explore Services", href: "/services" },
     img: "/slide-1.jpg",
+    imgAlt: "Global logistics operations — cargo containers at an international shipping port",
   },
   {
     headline: "Air. Sea.",
@@ -18,6 +20,7 @@ const SLIDES = [
     body: "From fast express couriers to full oceanic cargo freight — we handle your supply chain end-to-end, on schedule.",
     cta: { label: "View Services", href: "/services" },
     img: "/slide-2.jpg",
+    imgAlt: "Air freight and sea freight services — cargo aircraft on runway",
   },
   {
     headline: "Your Trusted",
@@ -25,6 +28,7 @@ const SLIDES = [
     body: "Round-the-clock dedicated operational support, customs clearance, and tailor-made logistics frameworks for businesses worldwide.",
     cta: { label: "Get in Touch", href: "/contact" },
     img: "/slide-3.jpg",
+    imgAlt: "Trusted logistics partner — professional freight forwarding team",
   },
 ];
 
@@ -199,10 +203,14 @@ export default function HeroSlider() {
       <div className="hs-wrap">
         {/* ── Photo on the RIGHT side ── */}
         <div className={`hs-img-right${fading ? " out" : ""}`}>
-          <img
+          <Image
             src={s.img}
-            alt={`${s.headline} ${s.accent}`}
+            alt={s.imgAlt}
+            fill
+            sizes="(max-width: 1024px) 100vw, 40vw"
+            priority={current === 0}
             draggable={false}
+            style={{ objectFit: "cover", objectPosition: "center" }}
           />
         </div>
 

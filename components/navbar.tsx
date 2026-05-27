@@ -6,6 +6,17 @@ import { usePathname } from "next/navigation";
 import { COMPANY, NAV_LINKS } from "@/lib/site-data";
 
 /**
+ * Hook to reveal email only on client-side (prevents scraper harvesting from SSR HTML)
+ */
+function useObfuscatedEmail() {
+  const [email, setEmail] = useState<string | null>(null);
+  useEffect(() => {
+    setEmail(COMPANY.email);
+  }, []);
+  return email;
+}
+
+/**
  * Slim navigation bar with scroll-triggered backdrop blur
  * and full-screen mobile overlay menu.
  */
@@ -13,6 +24,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
+  const obfuscatedEmail = useObfuscatedEmail();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -79,7 +91,7 @@ export default function Navbar() {
               style={{ borderLeft: "1px solid var(--color-swl-rule)" }}
             >
               <a
-                href={`mailto:${COMPANY.email}`}
+                href={obfuscatedEmail ? `mailto:${obfuscatedEmail}` : "#"}
                 style={{
                   fontSize: "0.75rem",
                   fontWeight: 600,
@@ -97,7 +109,7 @@ export default function Navbar() {
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                   <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                {COMPANY.email}
+                {obfuscatedEmail || "Contact Us"}
               </a>
               <div
                 style={{

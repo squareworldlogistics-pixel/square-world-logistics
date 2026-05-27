@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { SERVICES } from "@/lib/site-data";
 import type { Service } from "@/lib/site-data";
 
@@ -8,6 +9,14 @@ export const SERVICE_IMAGES: Record<string, string> = {
   "sea-freight": "/sea-freight.png",
   "tailor-made": "/tailor-made-new.jpg",
   "customs": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&auto=format&fit=crop",
+};
+
+const SERVICE_ALT_TEXT: Record<string, string> = {
+  "air-express": "International air express courier — fast door-to-door package delivery worldwide",
+  "air-freight": "International air freight cargo — commercial cargo transportation by aircraft",
+  "sea-freight": "International sea freight — container ship cargo transportation across global ports",
+  "tailor-made": "Customised logistics solutions — tailor-made freight planning for businesses",
+  "customs": "Customs clearance service — import and export documentation and compliance",
 };
 
 export default function ServiceBentoGrid({ limit }: { limit?: number }) {
@@ -30,6 +39,8 @@ export default function ServiceBentoGrid({ limit }: { limit?: number }) {
 
 function BentoCard({ service }: { service: Service }) {
   const imageUrl = SERVICE_IMAGES[service.id] || SERVICE_IMAGES["air-express"];
+  const altText = SERVICE_ALT_TEXT[service.id] || service.title;
+  const isRemote = imageUrl.startsWith("http");
 
   return (
     <div
@@ -67,16 +78,18 @@ function BentoCard({ service }: { service: Service }) {
           overflow: "hidden",
         }}
       >
-        <img
+        <Image
           src={imageUrl}
-          alt={service.title}
+          alt={altText}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          loading="lazy"
           style={{
-            width: "100%",
-            height: "100%",
             objectFit: "cover",
             transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
           }}
           className="bento-image"
+          {...(isRemote ? { width: 600, height: 220 } : {})}
         />
       </div>
 

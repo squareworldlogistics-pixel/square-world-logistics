@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SERVICES } from "@/lib/site-data";
+import Image from "next/image";
+import { SERVICES, COMPANY } from "@/lib/site-data";
 import { SERVICE_IMAGES } from "@/components/service-bento-grid";
 import SectionHeading from "@/components/section-heading";
 import MagneticButton from "@/components/magnetic-button";
@@ -31,8 +32,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${service.title} | Square World Logistics`,
-    description: service.description,
+    title: service.title,
+    description: service.description.slice(0, 155),
+    alternates: {
+      canonical: `/services/${resolvedParams.id}`,
+    },
+    openGraph: {
+      title: `${service.title} | ${COMPANY.name}`,
+      description: service.description,
+      url: `https://www.squareworldlogistics.com/services/${resolvedParams.id}`,
+      type: "website",
+    },
   };
 }
 
@@ -55,8 +65,40 @@ export default async function ServicePage({ params }: Props) {
     "customs": "center 30%",
   };
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: service.description,
+    provider: {
+      "@type": "Organization",
+      name: COMPANY.name,
+      url: "https://www.squareworldlogistics.com",
+    },
+    areaServed: "Worldwide",
+    serviceType: service.title,
+    url: `https://www.squareworldlogistics.com/services/${service.id}`,
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: `${service.title} Capabilities`,
+      itemListElement: service.features.map((feature, i) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: feature,
+        },
+      })),
+    },
+  };
+
   return (
     <>
+      {/* Service Schema Markup */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+
       <style>{`
         .svc-back {
           display: inline-flex;
@@ -112,14 +154,13 @@ export default async function ServicePage({ params }: Props) {
         }}
       >
         {/* Background Image */}
-        <img
+        <Image
           src={imageUrl}
-          alt={service.title}
+          alt={`${service.title} — ${service.subtitle} by Square World Logistics`}
+          fill
+          sizes="100vw"
+          priority
           style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
             objectFit: "cover",
             objectPosition: imagePositions[service.id] || "center 30%",
           }}

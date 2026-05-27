@@ -1,8 +1,45 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import SectionHeading from "@/components/section-heading";
 import ContactForm from "@/components/contact-form";
 import { COMPANY } from "@/lib/site-data";
+
+/**
+ * Obfuscated email component — prevents scrapers from harvesting the email
+ * address while keeping it functional for users.
+ */
+function ObfuscatedEmail({ email, style }: { email: string; style?: React.CSSProperties }) {
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    // Only reveal on client-side to prevent server-rendered plain text
+    setRevealed(true);
+  }, []);
+
+  if (!revealed) {
+    return (
+      <span style={style}>
+        [email protected]
+      </span>
+    );
+  }
+
+  return (
+    <a
+      href={`mailto:${email}`}
+      style={{
+        fontSize: "1rem",
+        fontWeight: 500,
+        color: "var(--color-swl-charcoal)",
+        transition: "opacity 0.2s ease",
+        ...style,
+      }}
+    >
+      {email}
+    </a>
+  );
+}
 
 export default function ContactSection({ 
   title = "Get In Touch", 
@@ -45,11 +82,21 @@ export default function ContactSection({
                   gap: "2rem",
                 }}
               >
-                <ContactInfoBlock
-                  label="Email"
-                  value={COMPANY.email}
-                  href={`mailto:${COMPANY.email}`}
-                />
+                <div>
+                  <div
+                    style={{
+                      fontSize: "0.6875rem",
+                      fontWeight: 600,
+                      letterSpacing: "0.12em",
+                      textTransform: "uppercase",
+                      marginBottom: "0.375rem",
+                      color: "var(--color-swl-slate)",
+                    }}
+                  >
+                    Email
+                  </div>
+                  <ObfuscatedEmail email={COMPANY.email} />
+                </div>
                 <div>
                   <div
                     style={{
@@ -127,9 +174,13 @@ export default function ContactSection({
                   </p>
                 </div>
 
-                {/* Map Section */}
-                {COMPANY.mapUrl && (
-                  <div
+                {/* Map Section — Static link instead of iframe for better SEO and performance */}
+                {COMPANY.mapStaticUrl && (
+                  <a
+                    href={COMPANY.mapStaticUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="View Square World Logistics office location on Google Maps"
                     style={{
                       marginTop: "1.5rem",
                       width: "100%",
@@ -138,19 +189,58 @@ export default function ContactSection({
                       overflow: "hidden",
                       border: "1px solid var(--color-swl-rule)",
                       position: "relative",
+                      display: "block",
+                      backgroundColor: "var(--color-swl-mist)",
                     }}
                   >
-                    <iframe
-                      src={COMPANY.mapUrl}
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen={false}
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="Office Location Map"
-                    />
-                  </div>
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "0.75rem",
+                        color: "var(--color-swl-slate)",
+                        transition: "background-color 0.2s ease",
+                      }}
+                    >
+                      <svg
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="var(--color-swl-blue)"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg>
+                      <span
+                        style={{
+                          fontSize: "0.875rem",
+                          fontWeight: 600,
+                          color: "var(--color-swl-blue)",
+                        }}
+                      >
+                        View on Google Maps →
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "var(--color-swl-slate)",
+                          textAlign: "center",
+                          maxWidth: "280px",
+                          lineHeight: 1.4,
+                        }}
+                      >
+                        C-16, M-Cube Business Hub, Vapi, Gujarat
+                      </span>
+                    </div>
+                  </a>
                 )}
               </div>
             
