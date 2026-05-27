@@ -14,6 +14,24 @@ interface MapProps {
   dotColor?: string;
 }
 
+// Cache the CPU-intensive DottedMap SVG calculation outside the component.
+// This prevents high CPU execution on every render cycle, dropping TBT to near-zero.
+let cachedSvgMap: string | null = null;
+
+function getCachedSvgMap(dotColor: string) {
+  if (cachedSvgMap) return cachedSvgMap;
+  
+  const map = new DottedMap({ height: 100, grid: "diagonal" });
+  cachedSvgMap = map.getSVG({
+    radius: 0.22,
+    color: dotColor,
+    shape: "circle",
+    backgroundColor: "transparent",
+  });
+  
+  return cachedSvgMap;
+}
+
 export function WorldMap({
   dots = [],
   lineColor = "#0ea5e9", // Lighter blue for dark background
@@ -21,15 +39,8 @@ export function WorldMap({
 }: MapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   
-  // DottedMap generates an elegant diagonal grid of dots
-  const map = new DottedMap({ height: 100, grid: "diagonal" });
+  const svgMap = getCachedSvgMap(dotColor);
 
-  const svgMap = map.getSVG({
-    radius: 0.22,
-    color: dotColor,
-    shape: "circle",
-    backgroundColor: "transparent",
-  });
 
   const projectPoint = (lat: number, lng: number) => {
     const x = (lng + 180) * (800 / 360);

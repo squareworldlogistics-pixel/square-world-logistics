@@ -173,8 +173,10 @@ export default function ContactForm() {
           onChange={(e) => updateField("name", e.target.value)}
           autoComplete="name"
           suppressHydrationWarning
+          aria-invalid={errors.name ? "true" : "false"}
+          aria-describedby={errors.name ? "contact-name-error" : undefined}
         />
-        {errors.name && <FieldError message={errors.name} />}
+        {errors.name && <FieldError id="contact-name-error" message={errors.name} />}
       </div>
 
       {/* Email */}
@@ -191,8 +193,10 @@ export default function ContactForm() {
           onChange={(e) => updateField("email", e.target.value)}
           autoComplete="email"
           suppressHydrationWarning
+          aria-invalid={errors.email ? "true" : "false"}
+          aria-describedby={errors.email ? "contact-email-error" : undefined}
         />
-        {errors.email && <FieldError message={errors.email} />}
+        {errors.email && <FieldError id="contact-email-error" message={errors.email} />}
       </div>
 
       {/* Phone */}
@@ -244,8 +248,10 @@ export default function ContactForm() {
           value={form.message}
           onChange={(e) => updateField("message", e.target.value)}
           rows={4}
+          aria-invalid={errors.message ? "true" : "false"}
+          aria-describedby={errors.message ? "contact-message-error" : undefined}
         />
-        {errors.message && <FieldError message={errors.message} />}
+        {errors.message && <FieldError id="contact-message-error" message={errors.message} />}
       </div>
 
       {submitError && (
@@ -300,12 +306,14 @@ export default function ContactForm() {
 
 /* ── Field Error ─────────────────────────────── */
 
-function FieldError({ message }: { message: string }) {
+function FieldError({ id, message }: { id: string; message: string }) {
   return (
     <span
+      id={id}
       className="text-xs mt-1 block"
       style={{ color: "var(--color-swl-crimson)" }}
       role="alert"
+      aria-live="polite"
     >
       {message}
     </span>

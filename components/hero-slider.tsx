@@ -214,18 +214,34 @@ export default function HeroSlider() {
       `}</style>
 
       <div className="hs-wrap">
-        {/* ── Photo on the RIGHT side ── */}
-        <div className={`hs-img-right${fading ? " out" : ""}`}>
-          <Image
-            src={s.img}
-            alt={s.imgAlt}
-            fill
-            sizes="(max-width: 1024px) 100vw, 40vw"
-            priority={current === 0}
-            draggable={false}
-            style={{ objectFit: "cover", objectPosition: "center" }}
-          />
+        {/* ── Photos on the RIGHT side (Statically rendered to enable instant preload & cache) ── */}
+        <div className="hs-img-right">
+          {SLIDES.map((slide, idx) => {
+            const isActive = idx === current;
+            return (
+              <div
+                key={idx}
+                className="absolute inset-0 transition-opacity duration-500 ease-in-out"
+                style={{
+                  opacity: isActive ? 1 : 0,
+                  zIndex: isActive ? 2 : 1,
+                  pointerEvents: isActive ? "auto" : "none",
+                }}
+              >
+                <Image
+                  src={slide.img}
+                  alt={slide.imgAlt}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  priority={idx === 0}
+                  draggable={false}
+                  style={{ objectFit: "cover", objectPosition: "center" }}
+                />
+              </div>
+            );
+          })}
         </div>
+
 
         {/* ── Fade overlay between dark-blue left and photo right ── */}
         <div className="hs-fade" />
