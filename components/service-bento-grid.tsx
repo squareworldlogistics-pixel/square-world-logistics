@@ -4,9 +4,9 @@ import type { Service } from "@/lib/site-data";
 
 export const SERVICE_IMAGES: Record<string, string> = {
   "air-express": "https://images.unsplash.com/photo-1542296332-2e4473faf563?q=80&w=600&auto=format&fit=crop",
-  "air-freight": "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?q=80&w=600&auto=format&fit=crop",
+  "air-freight": "/air-freight.jpg",
   "sea-freight": "/sea-freight.png",
-  "tailor-made": "/tailor-made.png",
+  "tailor-made": "/tailor-made-new.jpg",
   "customs": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&auto=format&fit=crop",
 };
 

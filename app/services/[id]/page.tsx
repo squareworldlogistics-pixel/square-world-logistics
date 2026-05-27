@@ -50,8 +50,8 @@ export default async function ServicePage({ params }: Props) {
   const imagePositions: Record<string, string> = {
     "air-express": "center 30%",
     "air-freight": "center 40%",
-    "sea-freight": "center 30%",
-    "tailor-made": "center 30%",
+    "sea-freight": "center 60%",
+    "tailor-made": "center 60%",
     "customs": "center 30%",
   };
 
