@@ -219,6 +219,30 @@ export default function ComingSoonPage() {
           letter-spacing: 0.15em;
           text-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
+        .cs-live-btn-wrap {
+          margin-bottom: clamp(2rem, 5vh, 3rem);
+        }
+
+        .cs-live-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.625rem 1.25rem;
+          border-radius: 8px;
+          background-color: #3B6EB5;
+          color: #ffffff;
+          font-weight: 600;
+          font-size: 0.8125rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          text-decoration: none;
+          transition: background-color 0.2s ease;
+          box-shadow: 0 4px 14px rgba(59, 110, 181, 0.2);
+        }
+
+        .cs-live-btn:hover {
+          background-color: #2d548c;
+        }
       `}</style>
 
       <div className="cs-page">
@@ -255,27 +279,10 @@ export default function ComingSoonPage() {
 
           {/* Corporate Launch Description or Enter Live Link */}
           {isLive ? (
-            <div style={{ marginBottom: "clamp(2rem, 5vh, 3rem)" }}>
+            <div className="cs-live-btn-wrap">
               <a
                 href="/"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  padding: "0.625rem 1.25rem",
-                  borderRadius: "8px",
-                  backgroundColor: "#3B6EB5",
-                  color: "#ffffff",
-                  fontWeight: 600,
-                  fontSize: "0.8125rem",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                  textDecoration: "none",
-                  transition: "background-color 0.2s ease",
-                  boxShadow: "0 4px 14px rgba(59, 110, 181, 0.2)",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#2d548c")}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#3B6EB5")}
+                className="cs-live-btn"
               >
                 Enter Website
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

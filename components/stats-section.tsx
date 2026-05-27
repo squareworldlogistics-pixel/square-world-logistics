@@ -8,6 +8,7 @@ import { useEffect, useState, useRef } from "react";
  * 2. Years of Experience: 3+
  * 3. Shipments Processed: 1K+
  * 4. Total Website Visitors: Live count with pulsing green indicator
+ * Completely optimized to remove inline styles for A+ PageSpeed Performance.
  */
 export default function StatsSection() {
   const [visitorCount, setVisitorCount] = useState<number | null>(null);
@@ -136,24 +137,9 @@ export default function StatsSection() {
   }, [visitorCount, hasAnimated]);
 
   return (
-    <section 
-      ref={ref}
-      style={{ 
-        backgroundColor: "var(--color-swl-white)",
-        borderTop: "1px solid var(--color-swl-rule)",
-        borderBottom: "1px solid var(--color-swl-rule)",
-        padding: "2rem 0"
-      }}
-    >
+    <section ref={ref} className="swl-stats">
       <div className="swl-container">
-        <div 
-          style={{ 
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "2.5rem 1.5rem",
-          }}
-          className="lg:!grid-cols-4"
-        >
+        <div className="swl-stats__grid lg:!grid-cols-4">
           {/* Static Stats with animated values */}
           {stats.map((stat, i) => (
             <StatItem 
@@ -161,98 +147,31 @@ export default function StatsSection() {
               value={stat.value} 
               suffix={stat.suffix} 
               label={stat.label} 
-              isLast={false} 
             />
           ))}
 
           {/* Dynamic Live Visitor Stat */}
-          <div style={{ textAlign: "center", padding: "0.5rem", position: "relative" }}>
+          <div className="swl-stats__item">
             {/* Pulsing indicator at the top right of the count */}
-            <div 
-              style={{ 
-                display: "inline-flex", 
-                alignItems: "center", 
-                gap: "0.5rem", 
-                justifyContent: "center",
-                fontFamily: "var(--font-display), system-ui, sans-serif",
-                fontSize: "clamp(2.5rem, 4vw, 2.75rem)",
-                fontWeight: 700,
-                color: "var(--color-swl-blue)",
-                lineHeight: 1.1,
-                marginBottom: "0.5rem",
-                letterSpacing: "-0.02em"
-              }}
-            >
+            <div className="swl-stats__value inline-flex items-center gap-2 justify-center">
               <span>{animatedVisitor.toLocaleString()}</span>
               
               {/* Pulse Dot */}
-              <div style={{ display: "inline-flex", position: "relative", width: "8px", height: "8px" }}>
-                <span 
-                  style={{
-                    position: "absolute",
-                    display: "inline-flex",
-                    height: "100%",
-                    width: "100%",
-                    borderRadius: "9999px",
-                    backgroundColor: "#22c55e",
-                    opacity: 0.75,
-                    animation: "ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite"
-                  }}
-                />
-                <span 
-                  style={{
-                    position: "relative",
-                    display: "inline-flex",
-                    borderRadius: "9999px",
-                    height: "8px",
-                    width: "8px",
-                    backgroundColor: "#22c55e"
-                  }}
-                />
+              <div className="swl-pulse-dot">
+                <span className="swl-pulse-dot__ring" />
+                <span className="swl-pulse-dot__core" />
               </div>
             </div>
 
-            <div
-              style={{
-                fontSize: "0.6875rem",
-                fontWeight: 700,
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "var(--color-swl-slate)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.375rem"
-              }}
-            >
+            <div className="swl-stats__label inline-flex items-center justify-center gap-1.5">
               Total Website Visitors
-              <span 
-                style={{ 
-                  fontSize: "0.625rem", 
-                  color: "#22c55e", 
-                  fontWeight: 800, 
-                  backgroundColor: "rgba(34, 197, 94, 0.1)", 
-                  padding: "0.125rem 0.375rem", 
-                  borderRadius: "4px",
-                  letterSpacing: "0.05em"
-                }}
-              >
+              <span className="swl-stats__live-badge">
                 LIVE
               </span>
             </div>
           </div>
         </div>
       </div>
-      
-      {/* Global ping animation styling */}
-      <style jsx global>{`
-        @keyframes ping {
-          75%, 100% {
-            transform: scale(2.5);
-            opacity: 0;
-          }
-        }
-      `}</style>
     </section>
   );
 }
@@ -264,12 +183,10 @@ function StatItem({
   value, 
   suffix, 
   label, 
-  isLast 
 }: { 
   value: number; 
   suffix: string; 
   label: string; 
-  isLast: boolean;
 }) {
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -313,36 +230,12 @@ function StatItem({
   }, [value, hasAnimated]);
 
   return (
-    <div 
-      ref={ref}
-      style={{ 
-        textAlign: "center", 
-        padding: "0.5rem" 
-      }}
-    >
-      <div
-        style={{
-          fontFamily: "var(--font-display), system-ui, sans-serif",
-          fontSize: "clamp(2.5rem, 4vw, 2.75rem)",
-          fontWeight: 700,
-          color: "var(--color-swl-blue)",
-          lineHeight: 1.1,
-          marginBottom: "0.5rem",
-          letterSpacing: "-0.02em"
-        }}
-      >
+    <div ref={ref} className="swl-stats__item">
+      <div className="swl-stats__value">
         <span className="tabular-nums">{count}</span>
         {suffix}
       </div>
-      <div
-        style={{
-          fontSize: "0.6875rem",
-          fontWeight: 700,
-          letterSpacing: "0.12em",
-          textTransform: "uppercase",
-          color: "var(--color-swl-slate)",
-        }}
-      >
+      <div className="swl-stats__label">
         {label}
       </div>
     </div>

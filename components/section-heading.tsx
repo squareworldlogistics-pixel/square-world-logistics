@@ -9,6 +9,7 @@ type SectionHeadingProps = {
 /**
  * Reusable section header with accent line.
  * Server component — no interactivity needed.
+ * Completely optimized to remove inline styles for A+ PageSpeed Performance.
  */
 export default function SectionHeading({
   title,
@@ -20,39 +21,15 @@ export default function SectionHeading({
   const isCenter = align === "center";
 
   return (
-    <div
-      style={{
-        marginBottom: "2.5rem",
-        textAlign: isCenter ? "center" : "left",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: isCenter ? "center" : "flex-start",
-      }}
-    >
-      <h2
-        style={{
-          fontSize: "clamp(1.75rem, 3.5vw, 2.25rem)",
-          marginBottom: "0.75rem",
-          color: "var(--color-swl-charcoal)",
-          position: "relative",
-          display: "inline-block",
-        }}
-      >
+    <div className={isCenter ? "swl-heading swl-heading--center" : "swl-heading swl-heading--left"}>
+      <h2 className="swl-heading__title">
         {title}
       </h2>
       {subtitle && (
-        <div
-          style={{
-            fontSize: "1rem",
-            maxWidth: "520px",
-            color: "var(--color-swl-slate)",
-            lineHeight: "1.6",
-          }}
-        >
+        <div className="swl-heading__subtitle">
           {subtitle}
         </div>
       )}
     </div>
   );
 }
-

@@ -198,6 +198,19 @@ export default function HeroSlider() {
           background: #FFFFFF;
           color: #1B2D45;
         }
+        /* ── World Map Container ── */
+        .hs-world-map {
+          position: absolute;
+          top: 3%;
+          bottom: 3%;
+          left: 0;
+          width: 70%;
+          opacity: 0.9;
+          z-index: 3;
+          pointer-events: none;
+          display: flex;
+          align-items: center;
+        }
       `}</style>
 
       <div className="hs-wrap">
@@ -218,21 +231,7 @@ export default function HeroSlider() {
         <div className="hs-fade" />
 
         {/* ── Dotted World Map (behind text on left ~70% of screen) ── */}
-        <div
-          style={{
-            position: "absolute",
-            top: "3%",
-            bottom: "3%",
-            left: "0",
-            width: "70%",
-            opacity: 0.9,
-            zIndex: 3,
-            pointerEvents: "none",
-            display: "flex",
-            alignItems: "center",
-          }}
-          className="hidden lg:flex"
-        >
+        <div className="hidden lg:flex hs-world-map">
           <WorldMap
             dots={[
               {

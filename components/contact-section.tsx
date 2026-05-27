@@ -9,7 +9,7 @@ import { COMPANY } from "@/lib/site-data";
  * Obfuscated email component — prevents scrapers from harvesting the email
  * address while keeping it functional for users.
  */
-function ObfuscatedEmail({ email, style }: { email: string; style?: React.CSSProperties }) {
+function ObfuscatedEmail({ email, className }: { email: string; className?: string }) {
   const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
@@ -19,23 +19,14 @@ function ObfuscatedEmail({ email, style }: { email: string; style?: React.CSSPro
 
   if (!revealed) {
     return (
-      <span style={style}>
+      <span className={className}>
         [email protected]
       </span>
     );
   }
 
   return (
-    <a
-      href={`mailto:${email}`}
-      style={{
-        fontSize: "1rem",
-        fontWeight: 500,
-        color: "var(--color-swl-charcoal)",
-        transition: "opacity 0.2s ease",
-        ...style,
-      }}
-    >
+    <a href={`mailto:${email}`} className={className}>
       {email}
     </a>
   );
@@ -49,201 +40,101 @@ export default function ContactSection({
   return (
     <section className="swl-section">
       <div className="swl-container">
-        
-          <SectionHeading
-            title={title}
-            subtitle={subtitle}
-            organic={organic}
-          />
-        
+        <SectionHeading
+          title={title}
+          subtitle={subtitle}
+          organic={organic}
+        />
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr",
-            gap: "3rem",
-          }}
-          className="md:!grid-cols-[3fr_2fr]"
-        >
+        <div className="swl-contact-grid md:!grid-cols-[3fr_2fr]">
           {/* Form */}
           <div>
-            
-              <ContactForm />
-            
+            <ContactForm />
           </div>
 
           {/* Contact Info */}
           <div>
-            
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "2rem",
-                }}
-              >
-                <div>
-                  <div
-                    style={{
-                      fontSize: "0.6875rem",
-                      fontWeight: 600,
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase",
-                      marginBottom: "0.375rem",
-                      color: "var(--color-swl-slate)",
-                    }}
-                  >
-                    Email
-                  </div>
-                  <ObfuscatedEmail email={COMPANY.email} />
+            <div className="swl-contact-info">
+              <div>
+                <div className="swl-contact-label">
+                  Email
                 </div>
-                <div>
-                  <div
-                    style={{
-                      fontSize: "0.6875rem",
-                      fontWeight: 600,
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase",
-                      marginBottom: "0.375rem",
-                      color: "var(--color-swl-slate)",
-                    }}
-                  >
-                    Phone
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
-                    <a
-                      href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
-                      style={{
-                        fontSize: "1rem",
-                        fontWeight: 500,
-                        color: "var(--color-swl-charcoal)",
-                        transition: "opacity 0.2s ease",
-                        width: "fit-content",
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.75")}
-                      onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-                    >
-                      {COMPANY.phone}
-                    </a>
-                    {COMPANY.phone2 && (
-                      <a
-                        href={`tel:${COMPANY.phone2.replace(/\s/g, "")}`}
-                        style={{
-                          fontSize: "1rem",
-                          fontWeight: 500,
-                          color: "var(--color-swl-charcoal)",
-                          transition: "opacity 0.2s ease",
-                          width: "fit-content",
-                        }}
-                        onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.75")}
-                        onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-                      >
-                        {COMPANY.phone2}
-                      </a>
-                    )}
-                  </div>
-                </div>
-                <ContactInfoBlock
-                  label="Office"
-                  value={COMPANY.address}
-                />
-                {COMPANY.officeHours && (
-                  <ContactInfoBlock
-                    label="Business Hours"
-                    value={COMPANY.officeHours}
-                  />
-                )}
-
-                {/* Response time note */}
-                <div
-                  style={{
-                    paddingTop: "1.5rem",
-                    marginTop: "0.5rem",
-                    borderTop: "1px solid var(--color-swl-rule)",
-                  }}
-                >
-                  <p
-                    style={{
-                      fontSize: "0.8125rem",
-                      lineHeight: "1.65",
-                      color: "var(--color-swl-slate)",
-                    }}
-                  >
-                    We typically respond within 24 hours during business
-                    days. For urgent inquiries, please call us directly.
-                  </p>
-                </div>
-
-                {/* Map Section — Static link instead of iframe for better SEO and performance */}
-                {COMPANY.mapStaticUrl && (
-                  <a
-                    href={COMPANY.mapStaticUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="View Square World Logistics office location on Google Maps"
-                    style={{
-                      marginTop: "1.5rem",
-                      width: "100%",
-                      height: "240px",
-                      borderRadius: "8px",
-                      overflow: "hidden",
-                      border: "1px solid var(--color-swl-rule)",
-                      position: "relative",
-                      display: "block",
-                      backgroundColor: "var(--color-swl-mist)",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "0.75rem",
-                        color: "var(--color-swl-slate)",
-                        transition: "background-color 0.2s ease",
-                      }}
-                    >
-                      <svg
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="var(--color-swl-blue)"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                        <circle cx="12" cy="10" r="3" />
-                      </svg>
-                      <span
-                        style={{
-                          fontSize: "0.875rem",
-                          fontWeight: 600,
-                          color: "var(--color-swl-blue)",
-                        }}
-                      >
-                        View on Google Maps →
-                      </span>
-                      <span
-                        style={{
-                          fontSize: "0.75rem",
-                          color: "var(--color-swl-slate)",
-                          textAlign: "center",
-                          maxWidth: "280px",
-                          lineHeight: 1.4,
-                        }}
-                      >
-                        C-16, M-Cube Business Hub, Vapi, Gujarat
-                      </span>
-                    </div>
-                  </a>
-                )}
+                <ObfuscatedEmail email={COMPANY.email} className="swl-contact-value block w-fit" />
               </div>
-            
+              <div>
+                <div className="swl-contact-label">
+                  Phone
+                </div>
+                <div className="flex flex-col gap-1">
+                  <a
+                    href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
+                    className="swl-contact-value block w-fit"
+                  >
+                    {COMPANY.phone}
+                  </a>
+                  {COMPANY.phone2 && (
+                    <a
+                      href={`tel:${COMPANY.phone2.replace(/\s/g, "")}`}
+                      className="swl-contact-value block w-fit"
+                    >
+                      {COMPANY.phone2}
+                    </a>
+                  )}
+                </div>
+              </div>
+              
+              <ContactInfoBlock
+                label="Office"
+                value={COMPANY.address}
+              />
+              {COMPANY.officeHours && (
+                <ContactInfoBlock
+                  label="Business Hours"
+                  value={COMPANY.officeHours}
+                />
+              )}
+
+              {/* Response time note */}
+              <div className="swl-contact-note">
+                <p>
+                  We typically respond within 24 hours during business
+                  days. For urgent inquiries, please call us directly.
+                </p>
+              </div>
+
+              {/* Map Section — Static link instead of iframe for better SEO and performance */}
+              {COMPANY.mapStaticUrl && (
+                <a
+                  href={COMPANY.mapStaticUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View Square World Logistics office location on Google Maps"
+                  className="swl-map-link hover:opacity-90 transition-opacity"
+                >
+                  <div className="swl-map-link__inner">
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="var(--color-swl-blue)"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    <span className="swl-map-link__label">
+                      View on Google Maps →
+                    </span>
+                    <span className="swl-map-link__addr">
+                      C-16, M-Cube Business Hub, Vapi, Gujarat
+                    </span>
+                  </div>
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -262,38 +153,15 @@ type ContactInfoBlockProps = {
 function ContactInfoBlock({ label, value, href }: ContactInfoBlockProps) {
   return (
     <div>
-      <div
-        style={{
-          fontSize: "0.6875rem",
-          fontWeight: 600,
-          letterSpacing: "0.12em",
-          textTransform: "uppercase",
-          marginBottom: "0.375rem",
-          color: "var(--color-swl-slate)",
-        }}
-      >
+      <div className="swl-contact-label">
         {label}
       </div>
       {href ? (
-        <a
-          href={href}
-          style={{
-            fontSize: "1rem",
-            fontWeight: 500,
-            color: "var(--color-swl-charcoal)",
-            transition: "opacity 0.2s ease",
-          }}
-        >
+        <a href={href} className="swl-contact-value block w-fit">
           {value}
         </a>
       ) : (
-        <span
-          style={{
-            fontSize: "1rem",
-            fontWeight: 500,
-            color: "var(--color-swl-charcoal)",
-          }}
-        >
+        <span className="swl-contact-value block">
           {value}
         </span>
       )}

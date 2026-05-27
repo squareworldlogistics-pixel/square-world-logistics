@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { COMPANY, NAV_LINKS } from "@/lib/site-data";
@@ -19,6 +19,7 @@ function useObfuscatedEmail() {
 /**
  * Slim navigation bar with scroll-triggered backdrop blur
  * and full-screen mobile overlay menu.
+ * Completely optimized to remove inline styles for A+ PageSpeed Performance.
  */
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -48,19 +49,11 @@ export default function Navbar() {
     <>
       <header
         id="navbar"
-        className="fixed top-0 left-0 right-0 z-50"
-        style={{
-          backgroundColor: "var(--color-swl-white)",
-          borderBottom: isScrolled
-            ? "1px solid var(--color-swl-rule)"
-            : "1px solid transparent",
-          transition: "all 0.35s ease",
-        }}
+        className={`fixed top-0 left-0 right-0 z-50 swl-nav-header ${
+          isScrolled ? "swl-nav-header--scrolled" : "swl-nav-header--unscrolled"
+        }`}
       >
-        <div
-          className="swl-container flex items-center justify-between"
-          style={{ height: "80px" }}
-        >
+        <div className="swl-container flex items-center justify-between h-[80px]">
           {/* Logo */}
           <Link href="/" className="flex items-center relative z-50">
             <img
@@ -68,7 +61,7 @@ export default function Navbar() {
               alt={`${COMPANY.name} Logo`}
               width="140"
               height="56"
-              style={{ height: "56px", width: "auto", display: "block" }}
+              className="swl-nav-logo"
             />
           </Link>
 
@@ -86,61 +79,34 @@ export default function Navbar() {
             </nav>
 
             {/* Elegant Minimal Contact Block */}
-            <div
-              className="flex flex-col items-end pl-8"
-              style={{ borderLeft: "1px solid var(--color-swl-rule)" }}
-            >
+            <div className="flex flex-col items-end pl-8 swl-nav-block">
               <a
                 href={obfuscatedEmail ? `mailto:${obfuscatedEmail}` : "#"}
-                style={{
-                  fontSize: "0.75rem",
-                  fontWeight: 600,
-                  color: "var(--color-swl-charcoal)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.375rem",
-                  marginBottom: "0.25rem",
-                  transition: "color 0.2s ease",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-blue)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-swl-charcoal)")}
+                className="swl-nav-email"
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-swl-blue)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
                 </svg>
                 {obfuscatedEmail || "Contact Us"}
               </a>
-              <div
-                style={{
-                  fontSize: "0.75rem",
-                  fontWeight: 700,
-                  color: "var(--color-swl-charcoal)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.75rem",
-                }}
-              >
+              <div className="swl-nav-phones">
                 <a
                   href={`tel:${COMPANY.phone.replace(/\s/g, "")}`}
-                  style={{ display: "flex", alignItems: "center", gap: "0.375rem", transition: "color 0.2s ease" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-blue)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-swl-charcoal)")}
+                  className="swl-nav-phone-item"
                 >
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-swl-blue)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                   </svg>
                   {COMPANY.phone}
                 </a>
                 {COMPANY.phone2 && (
                   <a
                     href={`tel:${COMPANY.phone2.replace(/\s/g, "")}`}
-                    style={{ display: "flex", alignItems: "center", gap: "0.375rem", transition: "color 0.2s ease" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-blue)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-swl-charcoal)")}
+                    className="swl-nav-phone-item"
                   >
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-swl-blue)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                     </svg>
                     {COMPANY.phone2}
                   </a>
@@ -152,7 +118,7 @@ export default function Navbar() {
           {/* Mobile Hamburger */}
           <button
             id="mobile-menu-toggle"
-            className="lg:hidden relative z-50 flex flex-col justify-center items-center w-10 h-10 gap-1.5"
+            className="lg:hidden relative z-50 flex flex-col justify-center items-center w-10 h-10 gap-1.5 swl-nav-hamburger"
             onClick={() => setIsMobileOpen(!isMobileOpen)}
             aria-label={isMobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileOpen}
@@ -197,12 +163,10 @@ export default function Navbar() {
 
       {/* Mobile Overlay */}
       <div
-        className="fixed inset-0 z-40 flex flex-col items-center justify-center lg:hidden"
+        className="fixed inset-0 z-40 flex flex-col items-center justify-center lg:hidden swl-nav-overlay"
         style={{
-          backgroundColor: "var(--color-swl-charcoal)",
           opacity: isMobileOpen ? 1 : 0,
           pointerEvents: isMobileOpen ? "auto" : "none",
-          transition: "opacity 0.4s ease",
         }}
       >
         <nav className="flex flex-col items-center gap-8" aria-label="Mobile navigation">
@@ -211,9 +175,8 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setIsMobileOpen(false)}
-              className="text-3xl font-bold tracking-wide uppercase"
+              className="text-3xl swl-nav-mobile-link"
               style={{
-                fontFamily: "var(--font-body), system-ui, sans-serif",
                 color:
                   pathname === link.href
                     ? "var(--color-swl-blue)"
@@ -251,17 +214,11 @@ function NavLink({
   return (
     <Link
       href={href}
-      className="relative py-1"
+      className="relative py-1 swl-nav-link"
       style={{
-        fontFamily: "var(--font-body), system-ui, sans-serif",
         color: isActive
           ? "var(--color-swl-blue)"
           : "var(--color-swl-charcoal)",
-        fontSize: "0.75rem",
-        fontWeight: 600,
-        letterSpacing: "0.1em",
-        textTransform: "uppercase" as const,
-        transition: "color 0.25s ease",
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -269,26 +226,17 @@ function NavLink({
       {label}
       {/* Solid Route track line */}
       <span
-        className="absolute left-0 -bottom-1 h-[2px] w-full"
+        className="absolute left-0 -bottom-1 h-[2px] w-full swl-nav-route-track"
         style={{
-          backgroundColor: "var(--color-swl-blue)",
           opacity: isActive || hovered ? 1 : 0,
-          transition: "opacity 0.3s ease",
         }}
       />
       {/* Transit Plane — centered on the 2px line at bottom:-4px */}
       <span
-        className="absolute"
+        className="absolute swl-nav-transit-plane"
         style={{
-          bottom: "-12.5px",
           opacity: isActive || hovered ? 1 : 0,
           left: hovered ? "calc(100% - 18px)" : isActive ? "calc(100% - 18px)" : "0px",
-          transition: "left 0.55s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "18px",
-          height: "18px",
         }}
       >
         <svg 
@@ -296,9 +244,8 @@ function NavLink({
           height="18" 
           viewBox="0 0 24 24" 
           fill="var(--color-swl-blue)"
-          style={{ transform: "rotate(90deg)" }}
         >
-          <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L14 19v-5.5L21 16z"/>
+          <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L14 19v-5.5L21 16z" />
         </svg>
       </span>
     </Link>
