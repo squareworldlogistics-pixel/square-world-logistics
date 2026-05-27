@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
  */
 export async function POST(request: Request) {
   try {
-    const { name, email, phone, service, message } = await request.json();
+    const { name, email, phone, service, message, turnstileToken } = await request.json();
 
     // 1. Basic Validation
     if (!name?.trim() || !email?.trim() || !message?.trim()) {
@@ -16,7 +16,33 @@ export async function POST(request: Request) {
       );
     }
 
-    // 2. Retrieve secure Resend API Key from Server Environment
+    // 2. Verify Cloudflare Turnstile Token
+    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+    if (turnstileSecret && turnstileToken) {
+      const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          secret: turnstileSecret,
+          response: turnstileToken,
+        }),
+      });
+
+      const verifyData = await verifyRes.json();
+      if (!verifyData.success) {
+        return NextResponse.json(
+          { error: "Security verification failed. Please try again." },
+          { status: 403 }
+        );
+      }
+    } else if (turnstileSecret && !turnstileToken) {
+      return NextResponse.json(
+        { error: "Security verification is required." },
+        { status: 403 }
+      );
+    }
+
+    // 3. Retrieve secure Resend API Key from Server Environment
     const apiKey = process.env.RESEND_API_KEY;
     if (!apiKey) {
       console.error("[Contact API] Error: RESEND_API_KEY is not defined in the environment.");

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, type FormEvent } from "react";
+import { useState, useEffect, useCallback, type FormEvent } from "react";
 import { SERVICES } from "@/lib/site-data";
 import MagneticButton from "@/components/magnetic-button";
+import TurnstileWidget from "@/components/turnstile-widget";
 
 type FormState = {
   name: string;
@@ -30,6 +31,15 @@ export default function ContactForm() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+
+  const handleTurnstileVerify = useCallback((token: string) => {
+    setTurnstileToken(token);
+  }, []);
+
+  const handleTurnstileExpire = useCallback(() => {
+    setTurnstileToken(null);
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -60,6 +70,11 @@ export default function ContactForm() {
     e.preventDefault();
     if (!validate()) return;
 
+    if (!turnstileToken) {
+      setSubmitError("Please complete the security verification.");
+      return;
+    }
+
     setSubmitting(true);
     setSubmitError(null);
 
@@ -69,7 +84,7 @@ export default function ContactForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, turnstileToken }),
       });
 
       const result = await response.json();
@@ -248,6 +263,12 @@ export default function ContactForm() {
           {submitError}
         </div>
       )}
+
+      {/* Cloudflare Turnstile */}
+      <TurnstileWidget
+        onVerify={handleTurnstileVerify}
+        onExpire={handleTurnstileExpire}
+      />
 
       <div className="mt-2">
         <MagneticButton

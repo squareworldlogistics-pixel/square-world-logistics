@@ -22,12 +22,12 @@ export default function LeadershipSection() {
           }}
         >
           {LEADERSHIP.map((leader, i) => (
-            <div key={i} style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+            <div key={i} style={{ display: "flex", flexDirection: "column", gap: "2rem", maxWidth: "420px", margin: "0 auto" }}>
               {/* Leader Photo */}
               <div 
                 style={{ 
                   width: "100%", 
-                  aspectRatio: "1/1", // Square for a more focused feel
+                  aspectRatio: "3/4",
                   overflow: "hidden", 
                   backgroundColor: "var(--color-swl-mist)",
                   position: "relative"
@@ -40,6 +40,7 @@ export default function LeadershipSection() {
                     width: "100%", 
                     height: "100%", 
                     objectFit: "cover",
+                    objectPosition: "top",
                     display: "block"
                   }} 
                 />
