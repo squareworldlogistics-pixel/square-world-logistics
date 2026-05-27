@@ -78,13 +78,12 @@ export async function POST(request: Request) {
         })
         .eq("slug", "__site_settings__");
       error = updateError;
-    } else {
+        } else {
       const { error: insertError } = await supabase
         .from("posts")
         .insert({
           slug: "__site_settings__",
           title: "Site Settings Metadata",
-          excerpt: "Launch status configurations.",
           body: JSON.stringify(newSettings),
         });
       error = insertError;
