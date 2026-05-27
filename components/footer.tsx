@@ -34,6 +34,7 @@ export default function Footer() {
               style={{
                 display: "inline-block",
                 marginBottom: "0.75rem",
+                marginTop: "-2.5rem",
               }}
             >
               <img
@@ -60,10 +61,15 @@ export default function Footer() {
             </p>
             <div style={{ display: "flex", gap: "1rem" }}>
               {/* Social Icons */}
-              {["linkedin", "twitter", "facebook"].map((social) => (
+              {[
+                { id: "linkedin", href: "https://www.linkedin.com/company/square_world_logistics/" },
+                { id: "facebook", href: "https://www.facebook.com/profile.php?id=61583040150446" }
+              ].map((social) => (
                 <a
-                  key={social}
-                  href="#"
+                  key={social.id}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -85,12 +91,11 @@ export default function Footer() {
                     e.currentTarget.style.color = "var(--color-swl-white)";
                     e.currentTarget.style.transform = "translateY(0)";
                   }}
-                  aria-label={social}
+                  aria-label={social.id}
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    {social === "linkedin" && <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z M2 9h4v12H2z M4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" />}
-                    {social === "twitter" && <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />}
-                    {social === "facebook" && <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />}
+                    {social.id === "linkedin" && <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z M2 9h4v12H2z M4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" />}
+                    {social.id === "facebook" && <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />}
                   </svg>
                 </a>
               ))}
@@ -265,6 +270,7 @@ export default function Footer() {
           <div style={{ display: "flex", gap: "2rem" }}>
             <Link href="/privacy" style={{ transition: "color 0.2s ease" }} onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-white)")} onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.7)")}>Privacy Policy</Link>
             <Link href="/terms" style={{ transition: "color 0.2s ease" }} onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-white)")} onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.7)")}>Terms of Service</Link>
+            <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" style={{ transition: "color 0.2s ease" }} onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-swl-white)")} onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255, 255, 255, 0.7)")}>Sitemap</a>
           </div>
         </div>
       </div>

@@ -133,8 +133,8 @@ export const SERVICES: Service[] = [
   },
   {
     id: "tailor-made",
-    title: "Customised Logistics",
-    subtitle: "Custom Logistics",
+    title: "Tailor Made Freight Solution",
+    subtitle: "Customised Logistics ",
     description:
       "Customized logistics strategies that match your shipping needs, timelines, and budget. We work closely with our customers to improve efficiency and reduce operational challenges.",
     features: [
