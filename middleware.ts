@@ -16,33 +16,56 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 2. Query settings dynamically
+  // 2. Query settings directly from Supabase REST API (NOT a self-fetch)
+  //    Self-fetching own API routes from middleware is broken on Vercel Edge.
   try {
-    const settingsRes = await fetch(`${request.nextUrl.origin}/api/admin/settings`, { cache: "no-store" });
-    if (settingsRes.ok) {
-      const settings = await settingsRes.json();
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-      // Maintenance mode takes absolute priority
-      if (settings.maintenanceActive) {
-        const url = request.nextUrl.clone();
-        url.pathname = "/maintenance";
-        return NextResponse.redirect(url);
+    if (!supabaseUrl || !supabaseKey) {
+      return NextResponse.next();
+    }
+
+    const res = await fetch(
+      `${supabaseUrl}/rest/v1/posts?slug=eq.__site_settings__&select=body`,
+      {
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+        },
+        cache: "no-store",
       }
+    );
 
-      // Coming soon mode takes next priority, but only if the countdown target is in the future
-      if (settings.comingSoonActive) {
-        const now = new Date().getTime();
-        const targetTime = new Date(settings.countdownTarget).getTime();
+    if (res.ok) {
+      const rows = await res.json();
 
-        if (!isNaN(targetTime) && now < targetTime) {
+      if (rows && rows.length > 0 && rows[0].body) {
+        const settings = JSON.parse(rows[0].body);
+
+        // Maintenance mode takes absolute priority
+        if (settings.maintenanceActive) {
           const url = request.nextUrl.clone();
-          url.pathname = "/coming-soon";
+          url.pathname = "/maintenance";
           return NextResponse.redirect(url);
+        }
+
+        // Coming soon mode — only redirect if countdown target is meaningfully in the future
+        if (settings.comingSoonActive && settings.countdownTarget) {
+          const now = Date.now();
+          const targetTime = new Date(settings.countdownTarget).getTime();
+
+          if (!isNaN(targetTime) && now < targetTime) {
+            const url = request.nextUrl.clone();
+            url.pathname = "/coming-soon";
+            return NextResponse.redirect(url);
+          }
         }
       }
     }
   } catch (error) {
-    console.error("Middleware settings fetch failed:", error);
+    // If anything fails, let traffic through — never block users due to a settings check failure
+    console.error("Middleware settings check failed:", error);
   }
 
   return NextResponse.next();

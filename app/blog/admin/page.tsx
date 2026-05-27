@@ -78,13 +78,19 @@ export default function AdminPage() {
     setSettingsError("");
 
     try {
+      // Convert local datetime to UTC ISO string so the server and browser
+      // both interpret the exact same moment in time
+      const utcTarget = countdownTarget
+        ? new Date(countdownTarget).toISOString()
+        : new Date(2026, 5, 1).toISOString();
+
       const res = await fetch("/api/admin/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           comingSoonActive,
           maintenanceActive,
-          countdownTarget,
+          countdownTarget: utcTarget,
         }),
       });
 
