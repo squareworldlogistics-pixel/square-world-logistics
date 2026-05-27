@@ -10,6 +10,7 @@ export default function ComingSoonPage() {
     seconds: "00",
   });
   const [targetLabel, setTargetLabel] = useState("June 1, 2026");
+  const [isLive, setIsLive] = useState(false);
 
   useEffect(() => {
     let targetTime = new Date(2026, 5, 1, 0, 0, 0).getTime(); // Default: June 1, 2026
@@ -40,9 +41,7 @@ export default function ComingSoonPage() {
 
       if (difference <= 0) {
         setTimeLeft({ days: "00", hours: "00", minutes: "00", seconds: "00" });
-        if (typeof window !== "undefined") {
-          window.location.href = "/";
-        }
+        setIsLive(true);
         return;
       }
 
@@ -254,10 +253,42 @@ export default function ComingSoonPage() {
             </div>
           </div>
 
-          {/* Corporate Launch Description */}
-          <p className="cs-description">
-            Our next-generation global logistics and tracking platform launches on {targetLabel}.
-          </p>
+          {/* Corporate Launch Description or Enter Live Link */}
+          {isLive ? (
+            <div style={{ marginBottom: "clamp(2rem, 5vh, 3rem)" }}>
+              <a
+                href="/"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  padding: "0.625rem 1.25rem",
+                  borderRadius: "8px",
+                  backgroundColor: "#3B6EB5",
+                  color: "#ffffff",
+                  fontWeight: 600,
+                  fontSize: "0.8125rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.05em",
+                  textDecoration: "none",
+                  transition: "background-color 0.2s ease",
+                  boxShadow: "0 4px 14px rgba(59, 110, 181, 0.2)",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#2d548c")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#3B6EB5")}
+              >
+                Enter Website
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+          ) : (
+            <p className="cs-description">
+              Our next-generation global logistics and tracking platform launches on {targetLabel}.
+            </p>
+          )}
 
           {/* High-End, Symmetrical Visual Cards */}
           <div className="cs-visuals-grid">

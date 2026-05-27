@@ -10,6 +10,7 @@ export default async function BlogPage() {
   const { data: posts, error } = await supabase
     .from("posts")
     .select("*")
+    .neq("slug", "__site_settings__")
     .order("created_at", { ascending: false });
 
   if (error) {

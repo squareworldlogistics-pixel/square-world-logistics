@@ -109,6 +109,7 @@ export default function AdminPage() {
     const { data, error } = await supabase
       .from("posts")
       .select("id, title, slug, created_at")
+      .neq("slug", "__site_settings__")
       .order("created_at", { ascending: false });
 
     if (!error && data) {

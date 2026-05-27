@@ -18,7 +18,7 @@ export async function middleware(request: NextRequest) {
 
   // 2. Query settings dynamically
   try {
-    const settingsRes = await fetch(`${request.nextUrl.origin}/api/admin/settings`);
+    const settingsRes = await fetch(`${request.nextUrl.origin}/api/admin/settings`, { cache: "no-store" });
     if (settingsRes.ok) {
       const settings = await settingsRes.json();
 

@@ -1,25 +1,50 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import fs from "fs";
-import path from "path";
+import { supabase } from "@/lib/supabase";
 
-const SETTINGS_PATH = path.join(process.cwd(), "public", "site-settings.json");
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const data = fs.readFileSync(SETTINGS_PATH, "utf8");
-    return NextResponse.json(JSON.parse(data));
+    const { data, error } = await supabase
+      .from("posts")
+      .select("content")
+      .eq("slug", "__site_settings__")
+      .single();
+
+    if (error || !data) {
+      // Fallback default configurations
+      return NextResponse.json({
+        comingSoonActive: true,
+        maintenanceActive: false,
+        countdownTarget: "2026-06-01T00:00:00",
+      }, {
+        headers: {
+          "Cache-Control": "no-store, max-age=0, must-revalidate",
+        }
+      });
+    }
+
+    return NextResponse.json(JSON.parse(data.content), {
+      headers: {
+        "Cache-Control": "no-store, max-age=0, must-revalidate",
+      }
+    });
   } catch (error) {
     return NextResponse.json({
       comingSoonActive: true,
       maintenanceActive: false,
       countdownTarget: "2026-06-01T00:00:00",
+    }, {
+      headers: {
+        "Cache-Control": "no-store, max-age=0, must-revalidate",
+      }
     });
   }
 }
 
 export async function POST(request: Request) {
-  // Check auth cookie
+  // Verify administrator auth cookie
   const cookieStore = await cookies();
   const session = cookieStore.get("swl_admin_session");
 
@@ -37,7 +62,39 @@ export async function POST(request: Request) {
       countdownTarget: countdownTarget || "2026-06-01T00:00:00",
     };
 
-    fs.writeFileSync(SETTINGS_PATH, JSON.stringify(newSettings, null, 2), "utf8");
+    // Query if settings metadata post already exists
+    const { data: existing } = await supabase
+      .from("posts")
+      .select("id")
+      .eq("slug", "__site_settings__")
+      .single();
+
+    let error;
+    if (existing) {
+      const { error: updateError } = await supabase
+        .from("posts")
+        .update({
+          content: JSON.stringify(newSettings),
+        })
+        .eq("slug", "__site_settings__");
+      error = updateError;
+    } else {
+      const { error: insertError } = await supabase
+        .from("posts")
+        .insert({
+          slug: "__site_settings__",
+          title: "Site Settings Metadata",
+          excerpt: "Launch status configurations.",
+          body: "DO NOT EDIT OR DELETE. Stored database site configurations.",
+          content: JSON.stringify(newSettings),
+        });
+      error = insertError;
+    }
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
     return NextResponse.json({ success: true, settings: newSettings });
   } catch (error: any) {
     return NextResponse.json({ error: error.message || "Failed to update settings" }, { status: 500 });
