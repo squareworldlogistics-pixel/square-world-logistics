@@ -60,7 +60,6 @@ export default function IncotermsGuide() {
             {/* Table Header */}
             <div 
               style={{ 
-                display: "grid", 
                 gridTemplateColumns: "100px 200px 1fr", 
                 backgroundColor: "var(--color-swl-charcoal)",
                 color: "var(--color-swl-white)",
@@ -71,7 +70,7 @@ export default function IncotermsGuide() {
                 letterSpacing: "0.1em",
                 textTransform: "uppercase"
               }}
-              className="hidden md:!grid"
+              className="hidden md:grid"
             >
               <div>Term</div>
               <div>Definition</div>

@@ -153,21 +153,24 @@ export default function StatsSection() {
           {/* Dynamic Live Visitor Stat */}
           <div className="swl-stats__item">
             {/* Pulsing indicator at the top right of the count */}
-            <div className="swl-stats__value inline-flex items-center gap-2 justify-center">
-              <span>{animatedVisitor.toLocaleString()}</span>
-              
-              {/* Pulse Dot */}
-              <div className="swl-pulse-dot">
-                <span className="swl-pulse-dot__ring" />
-                <span className="swl-pulse-dot__core" />
+            <div className="swl-stats__value">
+              <div className="inline-flex items-center gap-2 justify-center">
+                <span>{animatedVisitor.toLocaleString()}</span>
+                {/* Pulse Dot */}
+                <div className="swl-pulse-dot">
+                  <span className="swl-pulse-dot__ring" />
+                  <span className="swl-pulse-dot__core" />
+                </div>
               </div>
             </div>
 
-            <div className="swl-stats__label inline-flex items-center justify-center gap-1.5">
-              Total Website Visitors
-              <span className="swl-stats__live-badge">
-                LIVE
-              </span>
+            <div className="swl-stats__label">
+              <div className="inline-flex items-center justify-center gap-1.5">
+                Total Website Visitors
+                <span className="swl-stats__live-badge">
+                  LIVE
+                </span>
+              </div>
             </div>
           </div>
         </div>

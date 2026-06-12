@@ -30,7 +30,7 @@ export default function Footer() {
           <div className="md:pr-8">
             <div className="inline-block mb-3 -mt-10 -ml-6">
               <img
-                src="/logo-footer.png?v=3" // Custom transparent logo
+                src="/logo-footer.png?v=4" // Custom transparent logo
                 alt={`${COMPANY.name} Logo`}
                 width="260"
                 height="137"
@@ -169,7 +169,7 @@ export default function Footer() {
               Built by <a href="https://www.davlabs.in" target="_blank" rel="noopener noreferrer" className="text-white hover:border-b hover:border-white font-display text-[0.9375rem] ml-1 transition-all">DAVLabs</a>
             </span>
           </div>
-          <div className="flex gap-8">
+          <div className="flex gap-8 swl-footer-links">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
             <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Sitemap</a>

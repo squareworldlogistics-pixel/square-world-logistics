@@ -102,37 +102,44 @@ export default function ContactSection({
                 </p>
               </div>
 
-              {/* Map Section — Static link instead of iframe for better SEO and performance */}
-              {COMPANY.mapStaticUrl && (
-                <a
-                  href={COMPANY.mapStaticUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="View Square World Logistics office location on Google Maps"
-                  className="swl-map-link hover:opacity-90 transition-opacity"
-                >
-                  <div className="swl-map-link__inner">
-                    <svg
-                      width="32"
-                      height="32"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="var(--color-swl-blue)"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+              {/* Map Section — Interactive Google Map */}
+              {COMPANY.mapUrl && (
+                <div className="swl-map-container">
+                  <iframe
+                    src={COMPANY.mapUrl}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Square World Logistics office location on Google Maps"
+                    className="swl-map-iframe"
+                  />
+                  {COMPANY.mapStaticUrl && (
+                    <a
+                      href={COMPANY.mapStaticUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="swl-map-btn"
+                      aria-label="Open location in Google Maps"
                     >
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                      <circle cx="12" cy="10" r="3" />
-                    </svg>
-                    <span className="swl-map-link__label">
-                      View on Google Maps →
-                    </span>
-                    <span className="swl-map-link__addr">
-                      C-16, M-Cube Business Hub, Vapi, Gujarat
-                    </span>
-                  </div>
-                </a>
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      </svg>
+                      Open in Maps
+                    </a>
+                  )}
+                </div>
               )}
             </div>
           </div>
