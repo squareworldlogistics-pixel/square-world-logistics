@@ -33,17 +33,28 @@ export default function LeadershipSection() {
                   position: "relative"
                 }}
               >
-                <img 
-                  src={(leader as any).image} 
-                  alt={leader.name} 
-                  style={{ 
-                    width: "100%", 
-                    height: "100%", 
-                    objectFit: "cover",
-                    objectPosition: "top",
-                    display: "block"
-                  }} 
-                />
+                {(() => {
+                  const scale = (leader as any).imageScale ? `scale(${(leader as any).imageScale})` : "";
+                  const translateY = (leader as any).imageTranslateY ? `translateY(${(leader as any).imageTranslateY})` : "";
+                  const translateX = (leader as any).imageTranslateX ? `translateX(${(leader as any).imageTranslateX})` : "";
+                  const transform = [scale, translateY, translateX].filter(Boolean).join(" ") || "none";
+                  return (
+                    <img 
+                      src={(leader as any).image} 
+                      alt={leader.name} 
+                      style={{ 
+                        width: "100%", 
+                        height: "100%", 
+                        objectFit: "cover",
+                        objectPosition: (leader as any).imagePosition || "center top",
+                        transform,
+                        transformOrigin: "center center",
+                        transition: "transform 0.3s ease",
+                        display: "block"
+                      }} 
+                    />
+                  );
+                })()}
               </div>
 
               {/* Leader Info */}

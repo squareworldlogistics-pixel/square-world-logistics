@@ -236,6 +236,8 @@ export const LEADERSHIP = [
     name: "Priyank Mistry",
     role: "Founder",
     image: "/founder-new.jpg",
+    imageScale: 1.1,
+    // imageTranslateY: "-%",
     vision: "Our operational strength lies in our agility. By combining human expertise with streamlined processes, we ensure that every parcel tells a story of successful global connection.",
     ethics: [
       "Operational Integrity",
@@ -247,6 +249,8 @@ export const LEADERSHIP = [
     name: "Spandan Behera",
     role: "Co-Founder",
     image: "/co-founder.png",
+    imageScale: 1.15,
+    imageTranslateY: "5%",
     vision: "To redefine global logistics through radical transparency and unwavering reliability. We didn't just build a shipping company; we built a promise of excellence that spans every border.",
     ethics: [
       "Absolute Transparency",
