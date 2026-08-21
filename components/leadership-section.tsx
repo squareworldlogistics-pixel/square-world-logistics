@@ -76,7 +76,7 @@ export default function LeadershipSection() {
                     fontFamily: "var(--font-body)", 
                     fontSize: "0.8125rem", 
                     fontWeight: 600, 
-                    color: i === 0 ? "var(--color-swl-blue)" : "var(--color-swl-crimson)",
+                    color: "var(--color-swl-blue)",
                     letterSpacing: "0.15em",
                     textTransform: "uppercase",
                     marginBottom: "1.5rem"
@@ -119,7 +119,7 @@ export default function LeadershipSection() {
                           style={{ 
                             width: "8px", 
                             height: "1px", 
-                            backgroundColor: i === 0 ? "var(--color-swl-blue)" : "var(--color-swl-crimson)",
+                            backgroundColor: "var(--color-swl-blue)",
                             opacity: 0.5
                           }}
                         />
